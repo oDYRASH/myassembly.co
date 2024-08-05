@@ -6,7 +6,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-const app = createApp(App)
+const app = createApp(App) 
 
 router.beforeEach(to => {
     if (!to.matched.length) window.location = "/404"

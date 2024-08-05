@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
     "pinia": "^2.1.7",
+    "three": "^0.167.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
