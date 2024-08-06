@@ -1,19 +1,33 @@
 <script setup>
-    import Model3D from '../components/Model3D.vue'
-    import _ from 'lodash'
-    import { ref, onMounted } from 'vue'
+  import Model3D from '../components/Model3D.vue'
+  import { ref, onMounted, onUnmounted } from 'vue';
 
-    const scrollPosition = ref(0)
+  // Define a debounce function
+  function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+  }
 
-    onMounted(() => {
-        //debounceed scroll event listener with 50ms delay
-        window.addEventListener('scroll', _.debounce(() => {
-            scrollPosition.value = Math.floor(window.scrollY / (window.innerHeight * 0.8))
-        }, 20))
+  const scrollPosition = ref(0);
 
-    })
+  // Debounced scroll handler
+  const handleScroll = debounce(() => {
+      scrollPosition.value = Math.floor(window.scrollY / (window.innerHeight * 0.8));
+      console.log(scrollPosition.value);
+  }, 20);
+
+  onMounted(() => {
+      // Add the debounced scroll event listener
+      window.addEventListener('scroll', handleScroll);
+  });
+
 
 </script>
+
+
 
 <template>
 
