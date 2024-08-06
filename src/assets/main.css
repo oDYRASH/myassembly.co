@@ -3,12 +3,6 @@
 @import 'header.css';
 
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  font-weight: normal;
-}
-
 
 body {
   --sb-track-color: #e6e6e6;
@@ -36,4 +30,14 @@ body::-webkit-scrollbar-thumb {
     scrollbar-color: var(--sb-thumb-color)
                      var(--sb-track-color);
   }
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+span, button {
+  cursor: pointer;
 }

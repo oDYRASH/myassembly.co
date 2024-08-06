@@ -1,11 +1,25 @@
 <script setup>
-  import Model3D from '../components/Model3D.vue'
+    import Model3D from '../components/Model3D.vue'
+    import _ from 'lodash'
+    import { ref, onMounted } from 'vue'
+
+    const scrollPosition = ref(0)
+
+    onMounted(() => {
+        //debounceed scroll event listener with 50ms delay
+        window.addEventListener('scroll', _.debounce(() => {
+            scrollPosition.value = Math.floor(window.scrollY / (window.innerHeight * 0.8))
+        }, 20))
+
+    })
+
 </script>
 
 <template>
 
   <!-- 3D-SCENE -->
-   <Model3D/>
+
+  <Model3D :scrollPosition="scrollPosition"/>
 
   <!-- START SECTIONS -->
   <section id="section1">
@@ -67,62 +81,7 @@
       dream of a modern masterpiece or a cozy cottage, LSF can help you bring it to life, faster than ever before.
     </p>
   </section>
-
-  <section id="section6">
-    <h1>Sustainable Building Practices</h1>
-    <p style="max-width: 33vw !important;">
-      Sustainability is at the heart of LSF construction. Using recyclable materials and efficient building processes,
-      LSF minimizes the environmental impact of your projects, helping you build a greener future.
-    </p>
-  </section>
-
-  <section id="section7">
-    <h1>Cost-Effective Solutions</h1>
-    <p style="max-width: 33vw !important;">
-      LSF offers cost-effective solutions for all types of construction projects. By reducing labor costs and material
-      waste, LSF helps you stay within budget without compromising on quality or design.
-    </p>
-  </section>
-
-  <section id="section8">
-    <h1>Innovative Construction Techniques</h1>
-    <p style="max-width: 33vw !important;">
-      Stay ahead of the curve with innovative LSF construction techniques. Our advanced methodologies streamline the
-      building process, ensuring that your projects are completed faster and with superior quality.
-    </p>
-  </section>
-
-  <section id="section9">
-    <h1>Architectural Flexibility</h1>
-    <p style="max-width: 33vw !important;">
-      Flexibility is key in modern construction, and LSF delivers. Our system allows for easy modifications and
-      expansions, ensuring that your structures can evolve with your needs over time.
-    </p>
-  </section>
-
-  <section id="section10">
-    <h1>Enhanced Safety Features</h1>
-    <p style="max-width: 33vw !important;">
-      Safety is paramount in any construction project. LSF systems incorporate enhanced safety features to protect both
-      builders and occupants, providing peace of mind throughout the construction process and beyond.
-    </p>
-  </section>
-
-  <section id="section11">
-    <h1>Reduced Construction Time</h1>
-    <p style="max-width: 33vw !important;">
-      Speed up your construction timelines with LSF. Our streamlined processes and pre-engineered components
-      significantly reduce the time needed to complete your projects, allowing you to move from concept to completion
-      faster than ever.
-    </p>
-  </section>
-
-  <section id="section12">
-    <h1>Quality You Can Trust</h1>
-    <p style="max-width: 33vw !important;">
-      Trust in the quality and reliability of LSF for your construction needs. Our systems are designed to meet the
-      highest standards, ensuring that your projects are built to last with exceptional strength and durability.
-    </p>
-  </section>
   <!-- END SECTION -->
+
+
 </template>
