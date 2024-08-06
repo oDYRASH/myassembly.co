@@ -49,8 +49,7 @@
     canvas {
         position: fixed;
         top: 0;
-        left: 20vw;
         width: 100vw;
+        z-index: 1;
     }
 </style>
-@/model3d/model3d.js

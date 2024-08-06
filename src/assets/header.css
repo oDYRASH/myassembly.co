@@ -6,8 +6,10 @@
     padding-top: 3vmin;
 }
 
-
-
 .pointer{
     cursor: pointer;
+}
+
+header{
+    z-index:1000;
 }
