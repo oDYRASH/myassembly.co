@@ -1,6 +1,4 @@
-<template>
-    <!-- <canvas id="model3dHome"></canvas> -->
-</template>
+<!-- <template></template>
   
 <script setup>
 
@@ -52,4 +50,55 @@
         width: 100vw;
         z-index: 1;
     }
-</style>
+</style> -->
+
+
+<script setup>
+    import { defineProps, computed, onMounted, watch, onBeforeUnmount } from 'vue';
+    import { initThreeJs, cleanupThreeJs } from '@/model3d/model3d.js';
+
+    const props = defineProps({
+        scrollPosition: Number,
+        assemblyContainerId: String,
+        autoSpin: Boolean,
+        controls: Boolean,
+        callback: Function
+    });
+
+
+    const LOG = false;
+    const activeSection = computed(() => {
+        switch (props.scrollPosition) {
+            case 0:
+                if(LOG) console.log('Case 0');
+                return;
+            case 1:
+                if(LOG) console.log('Case 1');
+                return;
+            case 2:
+                if(LOG) console.log('Case 2');
+                return;
+            case 3:
+                if(LOG) console.log('Case 3');
+                return;
+            default:
+                if(LOG) console.log('Default case function triggered');
+                return;
+        }
+    });
+
+    watch(activeSection);
+
+
+    onMounted(() => {
+
+        initThreeJs(props.assemblyContainerId, props.autoSpin, props.controls, props.callback);
+
+        // Update the shared state with the created model
+    });
+
+    onBeforeUnmount(() => {
+        cleanupThreeJs();
+    });
+</script>
+

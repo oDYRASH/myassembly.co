@@ -1,3 +1,6 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 <template>
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between padding-header mb-4">
     <!-- LOGO -->
@@ -13,7 +16,7 @@
 
       <div class="col-md-3 text-end">
           <button type="button" class="btn " style="margin-right: 30px;">Contact Us</button>
-          <button type="button" class="btn btn-dark font-weight-bold" style="background-color: #15171a !important;">Start Demo</button>
+          <RouterLink to="/demo" class="btn btn-dark font-weight-bold" style="background-color: #15171a !important;">Start Demo</RouterLink>
       </div>
     </header>
 </template>

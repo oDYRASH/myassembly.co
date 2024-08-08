@@ -1,6 +1,7 @@
 <script setup>
   import Model3D from '../components/Model3D.vue'
   import { ref, onMounted, onUnmounted } from 'vue';
+  import Header from '../components/Header.vue'
 
   // Define a debounce function
   function debounce(func, wait) {
@@ -31,8 +32,8 @@
 
 <template>
 
+  <Header></Header>
   <!-- 3D-SCENE -->
-
   <Model3D :scrollPosition="scrollPosition"/>
 
   <!-- START SECTIONS -->
@@ -99,3 +100,12 @@
 
 
 </template>
+
+<style>
+  canvas {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 1;
+  }
+</style>
