@@ -22,7 +22,7 @@ const modelName = ref(route.params.modelName);
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->
-    <Assembly @set-assembly="updateAssembly" :modelName="modelName"></Assembly>
+    <Assembly @set-assembly="updateAssembly" :modelName="modelName ?  modelName : 'project_0'"></Assembly>
   </div>
 </template>
 
@@ -36,10 +36,4 @@ const modelName = ref(route.params.modelName);
     font-weight: normal;
   }
 
-</style>
-<style scoped>
-template {
-  display: flex;
-  flex-direction: row;
-}
 </style>

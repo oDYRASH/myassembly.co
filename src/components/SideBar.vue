@@ -1,7 +1,9 @@
 <script setup>
 
-    import { onMounted, defineProps } from 'vue'
+    import { onMounted, defineProps, ref } from 'vue'
     //use on mounted for the whole script
+
+    const playingAnimationState = ref(0)
 
     onMounted(() => {
         // Attach event listener to the sidebarCollapse element
@@ -28,7 +30,7 @@
 
     function toggelPanelVisibility(panelName) {
         //use method show on the model option
-        props.model.panelToggleVisibility(panelName)
+        props.model.togglePanelVisibility(panelName)
     }
 
     function stopModelAutoRotation() {
@@ -36,9 +38,32 @@
         props.model.stopAutorotate()
     }
 
-    function toggelGroupVisibility(gropuName) {
-        //use method hideGroup on the model option
-        props.model.toggelGroupVisibility(gropuName)
+    function toggleGroupVisibility(gropuName, index) {
+      //stop propagation
+      let toggleFrom = document.getElementById('toggleGroupVisibility_'+index).innerText
+      props.model.toggleGroupVisibility(gropuName)
+    }
+
+
+    function playBuildingAnimation() {
+      playingAnimationState.value = 1
+      props.model.playBuildingAnimation()
+    }
+
+    function pauseBuildingAnimation() {
+      playingAnimationState.value = 2
+      props.model.pauseBuildingAnimation()
+    }
+
+    function stopBuildingAnimation() {
+      playingAnimationState.value = 0
+      props.model.stopBuildingAnimation()
+      props.model.showAll()
+    }
+
+    function resumeBuildingAnimation() {
+      playingAnimationState.value = 1
+      props.model.resumeBuildingAnimation()
     }
 
 </script>
@@ -53,7 +78,27 @@
     
         <!-- Sidebar content -->
         <div class="sidebar-header">
-            <h3>PROJECT_NAME</h3>
+            
+            <div class="flex flex-row">
+              <h3>
+                PROJECT_NAME
+              </h3>
+
+              <div id="player">
+                <span v-if="playingAnimationState==0"class="material-icons me-5" @click="playBuildingAnimation()">play_arrow</span>
+              
+                <div v-else class="flex flex-row">
+              
+                  <span class="material-icons me-3" @click="playingAnimationState == 2 ? resumeBuildingAnimation() : pauseBuildingAnimation()">
+                    {{playingAnimationState == 2 ? 'play_arrow' : 'pause'}}
+                  </span>
+                  <span class="material-icons" @click="stopBuildingAnimation()">stop</span>
+              
+                </div>
+              
+              </div>
+              
+            </div>
         </div>
     
         <div v-if="model" class="accordion" id="accordionExample">
@@ -63,8 +108,8 @@
             <h2 class="accordion-header" :id="'heading_'+index">
               <button :class="index ? 'accordion-button collapsed' : 'accordion-button'" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse_'+index" :aria-expanded="index ? false : true" :aria-controls="'collapse_'+index">
                 
-                <button type="button" class="btn btn-ligh" @click="toggelGroupVisibility(group)">
-                  <span class="material-icons">visibility_off</span>
+                <button type="button" class="btn btn-ligh" @click.stop="toggleGroupVisibility(group, index)">
+                  <span class="material-icons" :id="'toggleGroupVisibility_'+index">visibility_off</span>
                 </button>
                 
                 <p class="me-3"></p>{{ group }} ({{ items.length }})

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-
-
 import { Group } from './group.js';
 import { Panel } from './panel.js';
-import { isPanelName, isPanelPart, groupByFirstLetter } from '../stores/utils.js';
+import { isPanelName, isPanelPart, sortArrayByLastNumber, getElementGroups } from '../stores/utils.js';
+import { PanelController } from './animationControler.js';
+
 
 export class Model {
 
@@ -11,58 +11,136 @@ export class Model {
 
         this.model = model;
         this.orbitControls = orbitControls;
+
         this.groups = {};
+
         this.groupsName = {};
 
-        this.init();
+        this.animationControler;
 
+        this.init();
     }
   
     init() {
+
         this.setGroups();
+
+        this.animationControler = new PanelController(this.groups);
+
     }
 
 
-    toggelPanelVisibility(panelName) {
-        console.log("from Model Class panelToggleVisibility()",panelName)
-        this.groups[panelName].toggleVisibility();
+    //VISIBILITY FUNCTIONS
+    togglePanelVisibility(panelName) {
+        this.getPanel(panelName).toggleVisibility();
     }
 
-    toggelGroupVisibility(groupName) {
-        console.log("from Model Class groupToggleVisibility()",groupName)
-        this.groups[groupName].toggleVisibility();
+    toggleGroupVisibility(groupName) {
+        this.getGroup(groupName).toggleVisibility();
     }
 
-    // controls interaction
+    hideAll() {
+        Object.keys(this.groups).forEach(groupName => {
+            this.getGroup(groupName).hide();
+        });
+    }
+
+    showAll() {
+        Object.keys(this.groups).forEach(groupName => {
+            this.getGroup(groupName).show();
+        });
+    }
+
+    // ANIMATION FUNCTIONS
     stopAutorotate() {
         this.orbitControls.autoRotate = false;
     }
 
+
+    // ANIMATION CONTROLER FUNCTIONS
+    playBuildingAnimation() {
+        this.hideAll();
+        this.animationControler.showPanelsWithDelay();
+        
+    }
+
+    pauseBuildingAnimation() {
+        this.animationControler.pause();
+    }
+
+    resumeBuildingAnimation() {
+        this.animationControler.resume();
+    }
+
+    stopBuildingAnimation() {
+        this.animationControler.stop();
+    }
+
+
+
+    async showPanelsWithDelay() {
+        for (const groupName of Object.keys(this.groups)) {
+            const group = this.getGroup(groupName);
+    
+            const panelNames = Object.keys(group.getPanels());
+            for (const panelName of panelNames) {
+                await new Promise(resolve => setTimeout(resolve, 333));
+                
+                const panel = group.getPanel(panelName);
+                panel.show();
+            }
+        }
+    }
+
+    //GET FUNCTIONS
+    getGroups() {
+        return this.groups;
+    }
+
+    getGroup(groupName) {
+        return this.groups[groupName];
+    }
+
+    getPanel(panelName) {
+
+        let group = this.getGroup(getElementGroups(panelName));
+        return group.getPanel(panelName);
+    }
+    
     //INIT FUNCTIONS
     setGroups(){
-        let currentGroupName = null;
+
+        let existingGroups = [];
+
+        let currentPanelName = null, currentGroupName = null;
   
         this.model.traverse((child) => {
+
             const name = child.name;
-            // console.log(name  + "  " + isPanelName(name) + "  " + isPanelPart(name))
-            let groupName = isPanelName(name)
+
+            let panelName = isPanelName(name)
   
-            if (groupName) {
+            if (panelName) {
+
+                currentGroupName = getElementGroups(panelName);
+
+                currentPanelName = panelName;
+
+                if(! existingGroups.includes(currentGroupName)){
+                    this.groups[currentGroupName] = new Group(currentGroupName);
+                    existingGroups.push(currentGroupName);
+                }
   
-                currentGroupName = groupName;
-                this.groups[currentGroupName] = new Panel(currentGroupName);
-  
-            } else if (currentGroupName && isPanelPart(name)) {
+                this.groups[currentGroupName].addPanel(new Panel(currentPanelName));
+
+            } else if (currentPanelName && isPanelPart(name)) {
                 this.allowTransprencyOnChild(child);
-                // child.parent.remove(child);
-                this.groups[currentGroupName].addElement(child);
+                this.groups[currentGroupName].getPanel(currentPanelName).addElement(child);
             }
   
         });
 
         this.setGroupsName();
-
-        
 
     }
 
@@ -79,8 +157,11 @@ export class Model {
     }
 
     setGroupsName(){
-        this.groupsName = groupByFirstLetter(Object.keys(this.groups));
-        console.log(this.groupsName)
+
+        Object.keys(this.groups).forEach(groupName => {
+            this.groupsName[groupName] = sortArrayByLastNumber(Object.keys(this.groups[groupName].getPanels()));
+        });
+        
     }
 
 }

@@ -5,6 +5,10 @@ export class Panel {
       this.visible = true;
     }
   
+    getName() {
+      return this.name;
+    }
+
     addElement(el) {
       this.elements.push(el);
     }

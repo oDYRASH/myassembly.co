@@ -10,7 +10,7 @@ let scene, camera, renderer, TG, orbitControls, pivot;
 function initThreeJs (containerId = null, autoSpin = false, controls = false, callback = null, modelName) {
     
     const modelColor = 0xffffff; // 0x242331
-    const sceneColor = 0x59656F; // 0xFBF7F4
+    const sceneColor = 0xffffff; // 0xFBF7F4
     
     const base = { x: 0, y: 4, z: 14 };
     const sceneContainer = document.getElementById(containerId);
@@ -29,7 +29,7 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     renderer = sceneContainer ? new THREE.WebGLRenderer({ antialias: true, canvas: sceneContainer }) : new THREE.WebGLRenderer({ antialias: true});//, canvas: document.getElementById('model3dHome') 
     renderer.useLegacyLights =  false;
 
-    renderer.setClearColor(sceneColor, 1); // Set background color to white
+    renderer.setClearColor(sceneColor, 0); // Set background color to white
     if(containerId) {
         renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
     }else{
@@ -52,6 +52,8 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
         orbitControls.maxDistance = 20;
     }
 
+    window.location.pathname == '/' ? renderer.domElement.style.left ="24vw" :  false;
+
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, .5);
     scene.add(ambientLight);
@@ -68,24 +70,24 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     scene.add( dirLight );
 
 
-    //Additional directional light
-    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
-    dirLight2.position.set(-10, 10, -10);
-    scene.add(dirLight2);
+    // //Additional directional light
+    // const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    // dirLight2.position.set(-10, 10, -10);
+    // scene.add(dirLight2);
 
-    // Hemisphere light for overall ambient light
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff,0.7);
-    hemiLight.position.set(0, 20, 0);
-    scene.add(hemiLight);
+    // // Hemisphere light for overall ambient light
+    // const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff,0.7);
+    // hemiLight.position.set(0, 20, 0);
+    // scene.add(hemiLight);
 
-    // Point lights for filling in shadows
-    const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
-    pointLight1.position.set(10, 10, 10);
-    scene.add(pointLight1);
+    // // Point lights for filling in shadows
+    // const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
+    // pointLight1.position.set(10, 10, 10);
+    // scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
-    pointLight2.position.set(-10, -10, -10);
-    scene.add(pointLight2);
+    // const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
+    // pointLight2.position.set(-10, -10, -10);
+    // scene.add(pointLight2);
 
     // GLTF Loader
     var model;

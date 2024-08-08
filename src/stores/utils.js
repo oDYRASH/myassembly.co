@@ -55,3 +55,45 @@ export function sortGroups(array){
       return array
     
 }
+
+export function getElementGroups(elementName) {
+    // Check if the element name starts with a letter
+    if (/^[A-Za-z]/.test(elementName)) {
+        // Handle names starting with a letter
+        const lastHyphenIndex = elementName.lastIndexOf('-');
+
+        if (lastHyphenIndex === -1) {
+            // If no hyphen is present, remove trailing numbers
+            let result = elementName.replace(/\d+$/, '');
+            // Remove trailing hyphen if it's the last character
+            return result.endsWith('-') ? result.slice(0, -1) : result;
+        } else {
+            // Extract the part of the string before the last hyphen
+            const partBeforeLastHyphen = elementName.substring(0, lastHyphenIndex);
+            // Remove trailing numbers from the extracted part
+            let result = partBeforeLastHyphen.replace(/\d+$/, '');
+            // Remove trailing hyphen if it's the last character
+            let res = result.endsWith('-') ? result.slice(0, -1) : result;
+            return res == "G" ? "G-W" : res;
+        }
+    } else {
+        // Handle names that don't start with a letter
+        let result = elementName.replace(/\d+$/, '');
+        // Remove trailing hyphen if it's the last character
+        return result.endsWith('-') ? result.slice(0, -1) : result;
+    }
+}
+
+function extractLastNumber(str) {
+    // Use a regular expression to find the last number in the string
+    const match = str.match(/(\d+)(?!.*\d)/);
+    return match ? parseInt(match[0], 10) : NaN; // Return NaN if no number is found
+}
+
+export function sortArrayByLastNumber(arr) {
+    return arr.sort((a, b) => {
+        const numA = extractLastNumber(a);
+        const numB = extractLastNumber(b);
+        return numA - numB;
+    });
+}
