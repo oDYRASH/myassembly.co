@@ -1,11 +1,13 @@
 import * as THREE from 'three';
+import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Tween, Easing, Group } from '@tweenjs/tween.js';
 
 import { Model } from '@/model3d/model.js';
 
-let scene, camera, renderer, TG, orbitControls, pivot;
+    
+let scene, camera, renderer, TG, orbitControls, pivot, labelRenderer;
 
 function initThreeJs (containerId = null, autoSpin = false, controls = false, callback = null, modelName) {
     
@@ -28,14 +30,29 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     // Renderer
     renderer = sceneContainer ? new THREE.WebGLRenderer({ antialias: true, canvas: sceneContainer }) : new THREE.WebGLRenderer({ antialias: true});//, canvas: document.getElementById('model3dHome') 
     renderer.useLegacyLights =  false;
-
     renderer.setClearColor(sceneColor, 0); // Set background color to white
+
+    // Label renderer
+    labelRenderer = new CSS2DRenderer();
+
+
+
     if(containerId) {
         renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
+        labelRenderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
     }else{
         renderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
     }
+
+
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.right = '0px';
+    document.body.appendChild(labelRenderer.domElement);
+
+
 
     if(controls) {
         // Controls
@@ -70,24 +87,24 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     scene.add( dirLight );
 
 
-    // //Additional directional light
-    // const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
-    // dirLight2.position.set(-10, 10, -10);
-    // scene.add(dirLight2);
+    //Additional directional light
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight2.position.set(-10, 10, -10);
+    scene.add(dirLight2);
 
-    // // Hemisphere light for overall ambient light
-    // const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff,0.7);
-    // hemiLight.position.set(0, 20, 0);
-    // scene.add(hemiLight);
+    // Hemisphere light for overall ambient light
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff,0.7);
+    hemiLight.position.set(0, 20, 0);
+    scene.add(hemiLight);
 
-    // // Point lights for filling in shadows
-    // const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
-    // pointLight1.position.set(10, 10, 10);
-    // scene.add(pointLight1);
+    // Point lights for filling in shadows
+    const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
+    pointLight1.position.set(10, 10, 10);
+    scene.add(pointLight1);
 
-    // const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
-    // pointLight2.position.set(-10, -10, -10);
-    // scene.add(pointLight2);
+    const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
+    pointLight2.position.set(-10, -10, -10);
+    scene.add(pointLight2);
 
     // GLTF Loader
     var model;
@@ -174,6 +191,12 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
+
+
+    
+
+
+
     // Animation loop
     const animate = () => {
 
@@ -184,6 +207,7 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
         renderer.render(scene, camera);
 
         if (orbitControls) orbitControls.update();
+        labelRenderer.render(scene, camera); // Add this line
 
     };
 

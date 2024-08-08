@@ -2,8 +2,6 @@
 
 import Model3d from './Model3D.vue'
 
-import { defineEmits } from 'vue';
-
 const emit = defineEmits(['set-assembly']);
 
 // set props modelName

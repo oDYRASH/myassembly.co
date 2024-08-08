@@ -1,5 +1,5 @@
 <script setup>
-    import { defineProps, computed, onMounted, watch, onBeforeUnmount } from 'vue';
+    import { computed, onMounted, watch, onBeforeUnmount } from 'vue';
     import { build3Dmodel, cleanupModelScene } from '@/model3d/model3d.js';
 
     const props = defineProps({

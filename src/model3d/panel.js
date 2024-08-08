@@ -13,12 +13,8 @@ export class Panel {
       this.elements.push(el);
     }
   
-    removeElement(elName) {
-      this.elements = this.elements.filter(el => el.name !== elName);
-    }
-  
-    findElement(elName) {
-      return this.elements.find(el => el.name === elName);
+    getElements() {
+      return this.elements;
     }
   
     hide() {

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { Group } from './group.js';
 import { Panel } from './panel.js';
 import { isPanelName, isPanelPart, sortArrayByLastNumber, getElementGroups } from '../stores/utils.js';
@@ -29,10 +30,64 @@ export class Model {
 
     }
 
+    //TO EXPORT LEBELING CLASS
+    addLabelToGroup(childrenArray, labelText) {
+        if (childrenArray.length === 0) return;
+    
+        console.log(childrenArray);
+        // Calculate the geometric center of the group
+        const center = new THREE.Vector3();
+        const box = new THREE.Box3();
+    
+        childrenArray.forEach(child => {
+            child.geometry.computeBoundingBox(); // Ensure bounding box is updated
+            box.expandByObject(child);
+        });
+    
+        box.getCenter(center);
+        console.log("getting center", center);
+        // Create the label
+        const labelDiv = document.createElement('div');
+        labelDiv.innerHTML = `
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Panel ${labelText}</h5>
+                <p class="card-text">Notes : X2 Screws each 250mm</p>
+                <a href="#" class="btn btn-primary">Done !</a>
+            </div>
+        </div>
+        
+        `
+        // labelDiv.className = 'label';
+        // labelDiv.textContent = labelText;
+
+        // Style the label
+        // labelDiv.style.fontSize = '20px'; // Makes the text bigger
+        // labelDiv.style.padding = '10px';  // Adds padding around the text
+        // labelDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Adds a semi-transparent background
+        // labelDiv.style.color = 'white'; // Text color
+        // labelDiv.style.borderRadius = '5px'; // Rounded corners
+        // labelDiv.style.border = '1px solid white'; // Border around the label
+
+        const label = new CSS2DObject(labelDiv);
+        label.position.copy(center); // Set the label at the center
+
+        // Attach label to one of the children (or the scene)
+        this.model.add(label);
+
+        // TO hide the label
+        // label.visible = false;
+
+    }
+
 
     //VISIBILITY FUNCTIONS
     togglePanelVisibility(panelName) {
-        this.getPanel(panelName).toggleVisibility();
+        const panel = this.getPanel(panelName);
+
+        this.addLabelToGroup(panel.getElements(), panelName);
+
+        // panel.toggleVisibility();
     }
 
     toggleGroupVisibility(groupName) {

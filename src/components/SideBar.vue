@@ -1,6 +1,6 @@
 <script setup>
 
-    import { onMounted, defineProps, ref } from 'vue'
+    import { onMounted, ref } from 'vue'
     //use on mounted for the whole script
 
     const playingAnimationState = ref(0)
@@ -76,6 +76,16 @@
             <span id="hideSideBar"><</span>
         </button>
     
+        <!-- Settings Controler  -->
+        <div id="settingsControler">
+            <button type="button" class="btn btn-light" @click="props.model.resetCamera()">
+                <span class="material-icons">settings_backup_restore</span>
+            </button>
+            <button type="button" class="btn btn-light" @click="props.model.toggleAutorotate()">
+                <span class="material-icons">rotate_right</span>
+            </button>
+        </div>
+
         <!-- Sidebar content -->
         <div class="sidebar-header">
             
@@ -97,7 +107,7 @@
                 </div>
               
               </div>
-              
+
             </div>
         </div>
     
