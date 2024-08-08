@@ -55,14 +55,15 @@
 
 <script setup>
     import { defineProps, computed, onMounted, watch, onBeforeUnmount } from 'vue';
-    import { initThreeJs, cleanupThreeJs } from '@/model3d/model3d.js';
+    import { build3Dmodel, cleanupModelScene } from '@/model3d/model3d.js';
 
     const props = defineProps({
         scrollPosition: Number,
         assemblyContainerId: String,
         autoSpin: Boolean,
         controls: Boolean,
-        callback: Function
+        callback: Function,
+        modelName: String
     });
 
 
@@ -92,13 +93,13 @@
 
     onMounted(() => {
 
-        initThreeJs(props.assemblyContainerId, props.autoSpin, props.controls, props.callback);
+        build3Dmodel(props.assemblyContainerId, props.autoSpin, props.controls, props.callback, props.modelName);
 
         // Update the shared state with the created model
     });
 
     onBeforeUnmount(() => {
-        cleanupThreeJs();
+        cleanupModelScene();
     });
 </script>
 

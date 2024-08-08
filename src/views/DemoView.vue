@@ -1,15 +1,19 @@
 <script setup>
-  import SideBar from '../components/SideBar.vue'
-  import Assembly from '../components/Assembly.vue'
-  import { ref } from 'vue';
+import SideBar from '../components/SideBar.vue'
+import Assembly from '../components/Assembly.vue'
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-  // Reactive state for the 3D model
-  const assembly3DModel = ref(null);
+// Reactive state for the 3D model
+const assembly3DModel = ref(null);
 
-  // Function to update the 3D model
-  const updateAssembly = (model) => {
-    assembly3DModel.value = model;
-  };
+// Function to update the 3D model
+const updateAssembly = (model) => {
+  assembly3DModel.value = model;
+};
+
+const route = useRoute();
+const modelName = ref(route.params.modelName);
 
 </script>
 
@@ -18,9 +22,10 @@
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->
-    <Assembly @set-assembly="updateAssembly"></Assembly>
+    <Assembly @set-assembly="updateAssembly" :modelName="modelName"></Assembly>
   </div>
 </template>
+
 
 
 <style>

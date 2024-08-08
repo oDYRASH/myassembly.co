@@ -2,11 +2,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Tween, Easing, Group } from '@tweenjs/tween.js';
-import modelPath from '@/assets/glbModel/HomePageModel.glb'; // Ensure this path is correct
+
+import { Model } from '@/model3d/model.js';
 
 let scene, camera, renderer, TG, orbitControls;
 
-export async function initThreeJs (containerId = null, autoSpin = false, controls = false, callback = null) {
+function initThreeJs (containerId = null, autoSpin = false, controls = false, callback = null, modelName) {
     const base = { x: 0, y: 4, z: 14 };
     const sceneContainer = document.getElementById(containerId);
 
@@ -65,8 +66,10 @@ export async function initThreeJs (containerId = null, autoSpin = false, control
     // GLTF Loader
     var model;
     const loader = new GLTFLoader();
+    
+    const modelUrl = `https://myassembly.co/src/assets/glbModel/${modelName}.glb`
 
-    loader.load(modelPath, (gltf) => {
+    loader.load(modelUrl, (gltf) => {
         model = gltf.scene;
         model.name = 'modelHomeView';
         scene.add(model);
@@ -81,12 +84,18 @@ export async function initThreeJs (containerId = null, autoSpin = false, control
                 child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
             }
         });
-
+        //TO EXPORT CODE TO FUNCTION || CLASS
+        // making groups and stuff to interact with the model
+        const model3D = new Model(model);
+        
         if(callback) {
-            callback(model);
+            callback(model3D);
         }
 
     }, undefined, (error) => {
+        //redirect user to /demo
+        alert('Model not found, redirecting to demo page');
+        window.location.href = '/demo';
         console.error(error);
     })
 
@@ -121,9 +130,7 @@ export async function initThreeJs (containerId = null, autoSpin = false, control
                 TG.add(t2);
             }, 50);
 
-           
-
-        });
+    });
 
     // Handle window resize
     window.addEventListener('resize', () => {
@@ -142,20 +149,25 @@ export async function initThreeJs (containerId = null, autoSpin = false, control
         renderer.render(scene, camera);
 
         if (orbitControls) orbitControls.update();
-        
-
-        // if(autoSpin) {
-        //     // model.rotation.y += 0.01;
-        //     console.log('autoSpin');
-        // }
 
     };
 
     animate();
 };
 
+
+//Three.js init
+export function build3Dmodel(containerId = null, autoSpin = false, controls = false, callback = null, modelName) {
+
+    const sceneModel = initThreeJs(containerId, autoSpin, controls, callback, modelName);
+
+
+
+}
+
+
 // remove all objects from scene
-export function cleanupThreeJs() {
+export function cleanupModelScene() {
     if (renderer) {
         renderer.dispose();
         renderer.forceContextLoss();

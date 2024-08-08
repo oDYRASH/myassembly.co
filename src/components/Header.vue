@@ -16,7 +16,8 @@ import { RouterLink } from 'vue-router'
 
       <div class="col-md-3 text-end">
           <button type="button" class="btn " style="margin-right: 30px;">Contact Us</button>
-          <RouterLink to="/demo" class="btn btn-dark font-weight-bold" style="background-color: #15171a !important;">Start Demo</RouterLink>
+          
+          <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" class="btn btn-dark font-weight-bold" style="background-color: #15171a !important;">Start Demo</RouterLink>
       </div>
     </header>
 </template>
