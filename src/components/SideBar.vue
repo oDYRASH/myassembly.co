@@ -9,6 +9,8 @@
         const sidebarCollapse = document.getElementById('sidebarCollapse')
         sidebarCollapse.addEventListener('click', toggleSidebar)
 
+        document.addEventListener('click', stopModelAutoRotation)
+
     })
 
     function toggleSidebar() {
@@ -24,9 +26,19 @@
         }
     });
 
-    function toggelVisibility(panelName) {
+    function toggelPanelVisibility(panelName) {
         //use method show on the model option
         props.model.panelToggleVisibility(panelName)
+    }
+
+    function stopModelAutoRotation() {
+        //use method stopAutoRotation on the model option
+        props.model.stopAutorotate()
+    }
+
+    function toggelGroupVisibility(gropuName) {
+        //use method hideGroup on the model option
+        props.model.toggelGroupVisibility(gropuName)
     }
 
 </script>
@@ -44,19 +56,32 @@
             <h3>PROJECT_NAME</h3>
         </div>
     
-        <div v-if="model">
-            <div v-for="(items, group) in model.groupsName" :key="group">
-                <h1>{{ group }} ({{ items.length }})</h1>
+        <div v-if="model" class="accordion" id="accordionExample">
+    
+          <div class="accordion-item" v-for="(items, group, index) in model.groupsName" :key="group">
+            
+            <h2 class="accordion-header" :id="'heading_'+index">
+              <button :class="index ? 'accordion-button collapsed' : 'accordion-button'" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse_'+index" :aria-expanded="index ? false : true" :aria-controls="'collapse_'+index">
+                
+                <button type="button" class="btn btn-ligh" @click="toggelGroupVisibility(group)">
+                  <span class="material-icons">visibility_off</span>
+                </button>
+                
+                <p class="me-3"></p>{{ group }} ({{ items.length }})
+                
+              </button>
+            </h2>
 
-
-                <button  v-for="(item, index) in items" :key="index" @click="toggelVisibility(item)" type="button" class="btn btn-white m-1">
+            <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1">
                   {{ item }}
                 </button>
-
-                <!-- <span v-for="(item, index) in items" :key="index" @click="toggelVisibility(item)">
-                    {{ item}}
-                </span> -->
+              </div>
             </div>
+            
+          </div>
+
         </div>
 
         <div v-else>

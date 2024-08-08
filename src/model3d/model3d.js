@@ -5,9 +5,13 @@ import { Tween, Easing, Group } from '@tweenjs/tween.js';
 
 import { Model } from '@/model3d/model.js';
 
-let scene, camera, renderer, TG, orbitControls;
+let scene, camera, renderer, TG, orbitControls, pivot;
 
 function initThreeJs (containerId = null, autoSpin = false, controls = false, callback = null, modelName) {
+    
+    const modelColor = 0xffffff; // 0x242331
+    const sceneColor = 0x59656F; // 0xFBF7F4
+    
     const base = { x: 0, y: 4, z: 14 };
     const sceneContainer = document.getElementById(containerId);
 
@@ -25,7 +29,7 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     renderer = sceneContainer ? new THREE.WebGLRenderer({ antialias: true, canvas: sceneContainer }) : new THREE.WebGLRenderer({ antialias: true});//, canvas: document.getElementById('model3dHome') 
     renderer.useLegacyLights =  false;
 
-    renderer.setClearColor(0xffffff, 0); // Set background color to white
+    renderer.setClearColor(sceneColor, 1); // Set background color to white
     if(containerId) {
         renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
     }else{
@@ -63,6 +67,26 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     dirLight.shadow.camera.far = 40;
     scene.add( dirLight );
 
+
+    //Additional directional light
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight2.position.set(-10, 10, -10);
+    scene.add(dirLight2);
+
+    // Hemisphere light for overall ambient light
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff,0.7);
+    hemiLight.position.set(0, 20, 0);
+    scene.add(hemiLight);
+
+    // Point lights for filling in shadows
+    const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
+    pointLight1.position.set(10, 10, 10);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
+    pointLight2.position.set(-10, -10, -10);
+    scene.add(pointLight2);
+
     // GLTF Loader
     var model;
     const loader = new GLTFLoader();
@@ -74,19 +98,28 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
         model.name = 'modelHomeView';
         scene.add(model);
         
+        pivot = new THREE.Object3D();
+        scene.add(pivot);
+        pivot.add(model);
+        
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.set(-center.x, -center.y, -center.z);
+  
+
         model.traverse((child) => {
             if (child.isMesh) {
-                child.material.transparent = true;
-                child.material.opacity = 1;
-                child.userData.originalPosition = child.position.clone();
-                child.material = child.material.clone();
-                const direction = new THREE.Vector3().copy(child.position).normalize();
-                child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
+                // child.material.transparent = false;
+                // // child.material.color.setHex('0x' + settings.colors[Math.floor(Math.random() * settings.colors.length)]);
+                // child.userData.originalPosition = child.position.clone();
+                // // child.material = child.material.clone();
+                // const direction = new THREE.Vector3().copy(child.position).normalize();
+                // child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
             }
         });
         //TO EXPORT CODE TO FUNCTION || CLASS
         // making groups and stuff to interact with the model
-        const model3D = new Model(model);
+        const model3D = new Model(model, orbitControls);
         
         if(callback) {
             callback(model3D);
@@ -94,8 +127,8 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
 
     }, undefined, (error) => {
         //redirect user to /demo
-        alert('Model not found, redirecting to demo page');
-        window.location.href = '/demo';
+        // alert('Model not found, redirecting to demo page');
+        // window.location.href = '/demo';
         console.error(error);
     })
 

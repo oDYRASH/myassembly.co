@@ -7,9 +7,10 @@ import { isPanelName, isPanelPart, groupByFirstLetter } from '../stores/utils.js
 
 export class Model {
 
-    constructor(model) {
+    constructor(model, orbitControls) {
 
         this.model = model;
+        this.orbitControls = orbitControls;
         this.groups = {};
         this.groupsName = {};
 
@@ -19,12 +20,22 @@ export class Model {
   
     init() {
         this.setGroups();
-        this.setGroupsName();
     }
 
-    panelToggleVisibility(panelName) {
+
+    toggelPanelVisibility(panelName) {
         console.log("from Model Class panelToggleVisibility()",panelName)
         this.groups[panelName].toggleVisibility();
+    }
+
+    toggelGroupVisibility(groupName) {
+        console.log("from Model Class groupToggleVisibility()",groupName)
+        this.groups[groupName].toggleVisibility();
+    }
+
+    // controls interaction
+    stopAutorotate() {
+        this.orbitControls.autoRotate = false;
     }
 
     //INIT FUNCTIONS
@@ -48,6 +59,11 @@ export class Model {
             }
   
         });
+
+        this.setGroupsName();
+
+        
+
     }
 
     allowTransprencyOnChild(child) {
