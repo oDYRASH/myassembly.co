@@ -106,6 +106,7 @@ function initThreeJs (containerId = null, autoSpin = false, controls = false, ca
     pointLight2.position.set(-10, -10, -10);
     scene.add(pointLight2);
 
+
     // GLTF Loader
     var model;
     const loader = new GLTFLoader();
@@ -232,6 +233,12 @@ export function cleanupModelScene() {
         renderer.forceContextLoss();
         renderer.domElement = null;
         renderer = null;
+    }
+
+    if (labelRenderer) {
+        // labelRenderer.dispose();
+        labelRenderer.domElement.remove();
+        labelRenderer = null;
     }
 
     if (scene) {
