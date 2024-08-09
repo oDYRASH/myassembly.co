@@ -9,6 +9,7 @@ const assembly3DModel = ref(null);
 
 // Function to update the 3D model
 const updateAssembly = (model) => {
+  console.log('updateAssembly :', model);
   assembly3DModel.value = model;
 };
 
@@ -19,13 +20,13 @@ const modelName = ref(route.params.modelName);
 
 <template>
   <div class="d-flex">
-    <RouterLink :to="'/'" class="btn btn-dark font-weight-bold"
+    <a href="/" class="btn btn-dark font-weight-bold"
   style="background-color: #15171a !important; position: absolute; top: 10px; right: 10px; z-index: 1000; font-weight: 700;"
-  >MyAssembly.co</RouterLink>
+  >MyAssembly.co</a>
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->
-    <Assembly @set-assembly="updateAssembly" :modelName="modelName ?  modelName : 'project_0'"></Assembly>
+    <Assembly @set-assembly="updateAssembly" :modelName="modelName ?  modelName : 'project_0'" :controls="true"></Assembly>
   </div>
 </template>
 

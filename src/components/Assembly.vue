@@ -21,7 +21,7 @@ const setModel = (m) => {
 
 <template>
     <div id="assembly-container">
-        <canvas id="assemblyScene"></canvas>
+        <canvas id="assemblyScene" style="width: -webkit-fill-available"></canvas>
         <Model3d 
             :scrollPosition="0" 
             :assemblyContainerId="'assemblyScene'" 
@@ -45,11 +45,17 @@ const setModel = (m) => {
 }
 
 #assemblyScene {
-    width: -webkit-fill-available;
-    height: 100%;
+    height: 100% !important;
     position: fixed;
     top: 0;
 
     background-color: aquamarine;
 }
+
+/* CSS for the canvas when the sidebar is hidden */
+.canvas-full-width {
+    width: 100vw !important;
+    transition: width 0.5s ease; /* Match this with the sidebar transition */
+}
+
 </style>

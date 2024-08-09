@@ -5,8 +5,9 @@ import { RouterLink } from 'vue-router'
 
 
   <nav class="navbar navbar-expand-md navbar-light padding-header" style="z-index: 10;">
-    <img style="height: 40px;" src="https://ghost.org/images/logos/logo-black-1.webp" alt="">
-
+    <div class="d-flex flex-row">
+      <p style="font-weight: bold; font-size: 25px;">MyAssembly.co</p>
+    </div>
     <button class="navbar-toggler" style="
     border: none;
     outline: none;

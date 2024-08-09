@@ -65,13 +65,3 @@ methods: {
 }
 }
 </script>
-
-<style scoped>
-canvas {
-background: rebeccapurple;
-position: absolute;
-right: 0;
-width: 40vw;
-height: 35vw;
-}
-</style>

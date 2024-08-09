@@ -19,6 +19,10 @@
         document.getElementById('sidebar').classList.toggle('active')
         const spanValue = document.getElementById('hideSideBar')
         spanValue.innerText = spanValue.innerText === '<' ? '>' : '<'
+
+        const canvas = document.getElementById('assemblyScene')
+        canvas.classList.toggle('canvas-full-width')
+
     }
 
     const props = defineProps({
@@ -34,8 +38,9 @@
     }
 
     function stopModelAutoRotation() {
-        //use method stopAutoRotation on the model option
-        props.model.stopAutorotate()
+      console.log('stopModelAutoRotation', props.model)
+      //use method stopAutoRotation on the model option
+      props.model.stopAutorotate()
     }
 
     function toggleGroupVisibility(gropuName, index) {
@@ -260,6 +265,7 @@
     fill: rgb(191, 184, 184);
   }
 }
+
 
 
 </style>
