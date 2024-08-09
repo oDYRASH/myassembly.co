@@ -9,8 +9,3 @@
 .pointer{
     cursor: pointer;
 }
-
-header{
-    z-index:1000;
-    position: relative;
-}

@@ -34,7 +34,7 @@
 
   <Header></Header>
   <!-- 3D-SCENE -->
-  <Model3D :scrollPosition="scrollPosition" :modelName="'project_0'"/>
+  <Model3D :scrollPosition="scrollPosition" :modelName="'0379'"/>
   <!-- START SECTIONS -->
   <section id="section1">
     <!-- <h1 style=" max-width: 80vw;">The <p id="float" class="g">Lightweight</p> and <p id="fall" class="g">Quick</p> solution.</h1>

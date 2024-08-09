@@ -19,6 +19,9 @@ const modelName = ref(route.params.modelName);
 
 <template>
   <div class="d-flex">
+    <RouterLink :to="'/'" class="btn btn-dark font-weight-bold"
+  style="background-color: #15171a !important; position: absolute; top: 10px; right: 10px; z-index: 1000; font-weight: 700;"
+  >MyAssembly.co</RouterLink>
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->
@@ -32,6 +35,9 @@ const modelName = ref(route.params.modelName);
 
   #app {
     max-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     margin: 0 auto;
     font-weight: normal;
   }
