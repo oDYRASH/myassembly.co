@@ -41,15 +41,13 @@ const setModel = (m) => {
     align-items: center;
     height: 100vh;
     width: 100%;
-    background-color: aquamarine;
+    background-color: #171f38;
 }
 
 #assemblyScene {
     height: 100% !important;
     position: fixed;
     top: 0;
-
-    background-color: aquamarine;
 }
 
 /* CSS for the canvas when the sidebar is hidden */

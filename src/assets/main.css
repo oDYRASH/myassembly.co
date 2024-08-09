@@ -46,3 +46,9 @@ body::-webkit-scrollbar-thumb {
 span, button {
   cursor: pointer;
 }
+
+.btn:focus, .btn:active, .btn {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

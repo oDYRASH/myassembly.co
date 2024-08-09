@@ -37,8 +37,10 @@
         props.model.togglePanelVisibility(panelName)
     }
 
+    let stopped = false
     function stopModelAutoRotation() {
-      console.log('stopModelAutoRotation', props.model)
+      if(stopped) return
+      stopped = true
       //use method stopAutoRotation on the model option
       props.model.stopAutorotate()
     }
@@ -83,10 +85,10 @@
     
         <!-- Settings Controler  -->
         <div id="settingsControler">
-            <button type="button" class="btn btn-light" @click="props.model.resetCamera()">
+            <button type="button" class="btn btn-light shadow-none" @click="props.model.resetCamera()">
                 <span class="material-icons">settings_backup_restore</span>
             </button>
-            <button type="button" class="btn btn-light" @click="props.model.toggleAutorotate()">
+            <button type="button" class="btn btn-light shadow-none" @click="props.model.toggleAutorotate()">
                 <span class="material-icons">rotate_right</span>
             </button>
         </div>
@@ -116,15 +118,43 @@
             </div>
         </div>
     
-        <div v-if="model" class="accordion" id="accordionExample">
-    
-          <div class="accordion-item" v-for="(items, group, index) in model.groupsName" :key="group">
+        <div
+          v-if="model" 
+          id="accordionExample"
+          class="accordion"
+          >
+          <div 
+            v-for="(items, group, index) in model.groupsName" 
+            :key="group"
+            class="accordion-item" 
+            >
             
-            <h2 class="accordion-header" :id="'heading_'+index">
-              <button :class="index ? 'accordion-button collapsed' : 'accordion-button'" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse_'+index" :aria-expanded="index ? false : true" :aria-controls="'collapse_'+index">
+            <h2 
+              class="accordion-header" 
+              :id="'heading_'+index"
+            >
+              <button 
+              :class="index ? 'accordion-button collapsed' : 'accordion-button'" 
+              :data-bs-target="'#collapse_'+index" 
+              :aria-expanded="index ? false : true" 
+              :aria-controls="'collapse_'+index" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              style="font-weight: bold;
+                    font-size: smaller;
+                    color: #171f38 !important;"
+              >
                 
-                <button type="button" class="btn btn-ligh" @click.stop="toggleGroupVisibility(group, index)">
-                  <span class="material-icons" :id="'toggleGroupVisibility_'+index">visibility_off</span>
+                <button 
+                  type="button"
+                  class="btn btn-ligh shadow-none" 
+                  @click.stop="toggleGroupVisibility(group, index)"
+                >
+                  <span 
+                    class="material-icons"
+                    :id="'toggleGroupVisibility_'+index"
+                  >visibility_off</span>
+
                 </button>
                 
                 <p class="me-3"></p>{{ group }} ({{ items.length }})
@@ -134,7 +164,7 @@
 
             <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1">
+                <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1 shadow-none">
                   {{ item }}
                 </button>
               </div>
