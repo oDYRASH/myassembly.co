@@ -1,6 +1,7 @@
 <script setup>
 import SideBar from '../components/SideBar.vue'
 import Assembly from '../components/Assembly.vue'
+import fullscreenToggler from '../components/fullscreenToggler.vue'
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -19,10 +20,13 @@ const modelName = ref(route.params.modelName);
 </script>
 
 <template>
+  <fullscreenToggler></fullscreenToggler>
+
   <div class="d-flex" style="overflow: hidden;">
     <a href="/" class="btn btn-dark font-weight-bold"
-  style="background-color: #15171a !important; position: absolute; top: 10px; right: 10px; z-index: 1000; font-weight: 700;"
-  >MyAssembly.co</a>
+      style="background-color: #15171a !important; position: absolute; bottom: 10px; right: 10px; z-index: 1000; font-weight: 700;"
+      >MyAssembly.co
+    </a>
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->
