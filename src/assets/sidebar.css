@@ -26,23 +26,44 @@
 
 #sidebar {
     position: relative;
-    min-width: 453.18px;
-    max-width: 453.18px;
+    min-width: 23.6vw;
+    max-width: 23.6vw;
     height: 100vh;
     background: #feffff;
     color: #171f38;
     transition: all 0.3s;
 }
-
-#sidebar.active {
-    margin-left: -453.18px;
+.sideBarBody {
+    overflow: auto;
+    height: 100%;
+    padding-bottom: 30px;
 }
+#sidebar.active {
+    margin-left: -23.6vw;
+}
+
+
+@media screen and (pointer: coarse) {
+    #sidebar {
+        min-width: 33vw;
+        max-width: 33vw;
+    }
+    #sidebar.active {
+        margin-left: -33vw;
+    }
+    
+}
+
 
 #sidebar .sidebar-header {
     padding: 20px;
     background: #feffff;
     color: #171f38;
 }
+
+/* .sidebar-header{
+    border-bottom: 1px solid #171f384d;
+} */
 
 .btn-secondary {
     color: #fff;

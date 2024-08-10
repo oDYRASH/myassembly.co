@@ -32,7 +32,11 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     renderer = sceneContainer ? new THREE.WebGLRenderer({ antialias: true, canvas: sceneContainer }) : new THREE.WebGLRenderer({ antialias: true });
     renderer.useLegacyLights =  false;
     renderer.setClearColor(sceneColor, 0); // Set background color to white
-
+    
+    const pr = window.devicePixelRatio 
+    renderer.setPixelRatio(pr);
+    
+    console.log('pixel ratio', pr);
     // Label renderer
     labelRenderer = new CSS2DRenderer();
 
@@ -158,7 +162,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
             }, 333); // Match this duration with the CSS transition time for the sidebar
         });
         
-        const model3D = new Model(model, orbitControls);
+        const model3D = new Model(model, orbitControls, renderer);
         if (callback) {
             callback(model3D);
         }

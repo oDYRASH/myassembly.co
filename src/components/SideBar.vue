@@ -73,6 +73,16 @@
       props.model.resumeBuildingAnimation()
     }
 
+    const sliderValue = ref(window.devicePixelRatio)
+
+    function updateRendererPixelRatio(){
+      props.model.renderer.setPixelRatio(sliderValue.value)
+    }
+
+
+
+
+
 </script>
 
 <template>
@@ -84,7 +94,7 @@
         </button>
     
         <!-- Settings Controler  -->
-        <div id="settingsControler">
+        <div id="settingsControler" style="display: none !important;">
             <button type="button" class="btn btn-light shadow-none" @click="props.model.resetCamera()">
                 <span class="material-icons">settings_backup_restore</span>
             </button>
@@ -93,6 +103,7 @@
             </button>
         </div>
 
+        
         <!-- Sidebar content -->
         <div class="sidebar-header">
             
@@ -117,61 +128,71 @@
 
             </div>
         </div>
-    
-        <div
-          v-if="model" 
-          id="accordionExample"
-          class="accordion"
-          >
-          <div 
-            v-for="(items, group, index) in model.groupsName" 
-            :key="group"
-            class="accordion-item" 
+        <div v-if="model" class="sideBarBody">
+          <input 
+          type="range" 
+          step="0.2"
+          min="0" 
+          max="10" 
+          v-model="sliderValue" 
+          @input="updateRendererPixelRatio"
+        />
+        {{ sliderValue }}
+          <div
+
+            id="accordionExample"
+            class="accordion"
             >
-            
-            <h2 
-              class="accordion-header" 
-              :id="'heading_'+index"
-            >
-              <button 
-              :class="index ? 'accordion-button collapsed' : 'accordion-button'" 
-              :data-bs-target="'#collapse_'+index" 
-              :aria-expanded="index ? false : true" 
-              :aria-controls="'collapse_'+index" 
-              type="button" 
-              data-bs-toggle="collapse" 
-              style="font-weight: bold;
-                    font-size: smaller;
-                    color: #171f38 !important;"
+            <div 
+              v-for="(items, group, index) in model.groupsName" 
+              :key="group"
+              class="accordion-item" 
               >
-                
+              
+              <h2 
+                class="accordion-header" 
+                :id="'heading_'+index"
+              >
                 <button 
-                  type="button"
-                  class="btn btn-ligh shadow-none" 
-                  @click.stop="toggleGroupVisibility(group, index)"
+                :class="index ? 'accordion-button collapsed' : 'accordion-button'" 
+                :data-bs-target="'#collapse_'+index" 
+                :aria-expanded="index ? false : true" 
+                :aria-controls="'collapse_'+index" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                style="font-weight: bold;
+                      font-size: smaller;
+                      color: #171f38 !important;"
                 >
-                  <span 
-                    class="material-icons"
-                    :id="'toggleGroupVisibility_'+index"
-                  >visibility_off</span>
+                  
+                  <button 
+                    type="button"
+                    class="btn btn-ligh shadow-none" 
+                    @click.stop="toggleGroupVisibility(group, index)"
+                  >
+                    <span 
+                      class="material-icons"
+                      :id="'toggleGroupVisibility_'+index"
+                    >visibility_off</span>
 
+                  </button>
+                  
+                  <p class="me-3"></p>{{ group }} ({{ items.length }})
+                  
                 </button>
-                
-                <p class="me-3"></p>{{ group }} ({{ items.length }})
-                
-              </button>
-            </h2>
+              </h2>
 
-            <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1 shadow-none">
-                  {{ item }}
-                </button>
+              <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1 shadow-none">
+                    {{ item }}
+                  </button>
+                </div>
               </div>
+              
             </div>
-            
-          </div>
 
+          </div>
         </div>
 
         <div v-else>

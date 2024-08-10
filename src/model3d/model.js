@@ -8,8 +8,9 @@ import { PanelController } from './animationControler.js';
 
 export class Model {
 
-    constructor(model, orbitControls) {
+    constructor(model, orbitControls, renderer) {
 
+        this.renderer = renderer;
         this.model = model;
         this.orbitControls = orbitControls;
 
@@ -29,6 +30,7 @@ export class Model {
         this.animationControler = new PanelController(this.groups);
 
     }
+
 
     //TO EXPORT LEBELING CLASS
     addLabelToGroup(childrenArray, labelText) {
