@@ -11,6 +11,17 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/getting-started',
+      name: 'getting-started',
+      component: () => import('../views/GetStarted.vue')
+    },
+    // dashboard
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/Dashboard.vue')
+    },
+    {
       path: '/demo',
       redirect: '/demo/project_0'
     },

@@ -23,10 +23,19 @@ const modelName = ref(route.params.modelName);
   <fullscreenToggler></fullscreenToggler>
 
   <div class="d-flex" style="overflow: hidden;">
-    <a href="/" class="btn btn-dark font-weight-bold"
-      style="background-color: #15171a !important; position: absolute; bottom: 10px; right: 10px; z-index: 1000; font-weight: 700;"
+    <div class="d-flex flex-row" style="position: absolute; bottom: 10px; right: 10px; width: fit-content;">
+
+      <!-- <a href="/" class="btn btn-dark font-weight-bold"
+      style="background-color: #15171a !important;  z-index: 1000; font-weight: 700;"
       >MyAssembly.co
+    </a> -->
+    <a href="/dashboard" class="btn btn-dark font-weight-bold"
+      style="background-color: #00A6ED!important; color: #171f38; z-index: 1000; font-weight: 700; align-items: center; justify-content: center; display: flex; flex-direction:row">
+      <span class="material-icons" style="margin-right: 10px;">add</span>
+        Build Your Own Assembly
     </a>
+  
+  </div>
     <!-- SIDE BAR -->
     <SideBar :model="assembly3DModel"></SideBar>
     <!-- ASSEMBLY -->

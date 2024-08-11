@@ -128,7 +128,8 @@
 
             </div>
         </div>
-        <div v-if="model" class="sideBarBody">
+        <!-- col-12 col-sm-6 p-0 m-0 border h-100 overflow-hidden -->
+        <div v-if="model" class="p-0 m-0 border h-100 overflow-hidden">
           <input 
           type="range" 
           step="0.2"
@@ -141,7 +142,7 @@
           <div
 
             id="accordionExample"
-            class="accordion"
+            class="accordion accordion-flush h-100 overflow-auto"
             >
             <div 
               v-for="(items, group, index) in model.groupsName" 

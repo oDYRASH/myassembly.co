@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 <template>
 
 
-  <nav class="navbar navbar-expand-md navbar-light padding-header" style="z-index: 10;">
+  <nav class="navbar navbar-expand-md navbar-light padding-header" style="z-index: 10; background-color:#ffffff;">
     <div class="d-flex flex-row">
       <p style="font-weight: bold; font-size: 25px;">MyAssembly.co</p>
     </div>
@@ -49,10 +49,10 @@ import { RouterLink } from 'vue-router'
 
 
       </ul>
-      <div class="col-md-3 text-end" style="min-width: 250px;">
-        <button type="button" class="btn" style="margin-right: 30px;">Contact Us</button>
-        <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" class="btn btn-dark font-weight-bold"
-        style="background-color: #15171a !important;">Start Demo</RouterLink>
+      <div class="col-md-3 d-flex flex-row" style="min-width: 309px;">
+        <button type="button" class="btn" style="margin-right: 15px;">Contact Us</button>
+        <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" class="btn btn-dark d-flex flex-row"
+        style="background-color: #15171a !important; width: fit-content;"><p style="font-weight: bold; margin-right: 1ch;">Get Started</p><p> — it's free</p></RouterLink>
       </div>
     </div>
   </nav>
