@@ -93,15 +93,6 @@
 
 
 
-
-/* CHAT G */
-
-  /* Ensure accordion items can scroll within their container */
-  .accordion-collapse {
-    max-height: calc(100vh - 60px); /* Adjust this as needed */
-    overflow-y: auto;
-}
-
 /* General overflow handling for the accordion */
 #accordionExample {
     overflow-y: auto;

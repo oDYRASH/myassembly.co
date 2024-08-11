@@ -51,7 +51,7 @@ import { RouterLink } from 'vue-router'
       </ul>
       <div class="col-md-3 d-flex flex-row" style="min-width: 309px;">
         <button type="button" class="btn" style="margin-right: 15px;">Contact Us</button>
-        <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" class="btn btn-dark d-flex flex-row"
+        <RouterLink :to="'/get-started'" class="btn btn-dark d-flex flex-row"
         style="background-color: #15171a !important; width: fit-content;"><p style="font-weight: bold; margin-right: 1ch;">Get Started</p><p> — it's free</p></RouterLink>
       </div>
     </div>

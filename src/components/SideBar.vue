@@ -9,8 +9,9 @@
         // Attach event listener to the sidebarCollapse element
 
         const sidebarCollapse = document.getElementById('sidebarCollapse')
-        sidebarCollapse.addEventListener('click', toggleSidebar)
-
+        
+        if(sidebarCollapse) sidebarCollapse.addEventListener('click', toggleSidebar)
+        
         document.addEventListener('click', stopModelAutoRotation)
 
     })
@@ -29,6 +30,10 @@
         model: {
             type: Object,
             default: null
+        },
+        projectName: {
+            type: String,
+            default: 'Your Project'
         }
     });
 
@@ -89,7 +94,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar" class="">
         <!-- toggleButton -->
-        <button type="button" id="sidebarCollapse">
+        <button type="button" id="sidebarCollapse" :style="projectName == 'Project_DEMO' ? 'display:none' : 'display:block'">
             <span id="hideSideBar"><</span>
         </button>
     
@@ -107,15 +112,15 @@
         <!-- Sidebar content -->
         <div class="sidebar-header">
             
-            <div class="flex flex-row">
-              <h3>
-                PROJECT_NAME
+            <div class="d-flex flex-row" style=" align-items: center; gap: 15px;">
+              <h3 style="margin: 0px;">
+                {{projectName}}
               </h3>
 
-              <div id="player">
-                <span v-if="playingAnimationState==0"class="material-icons me-5" @click="playBuildingAnimation()">play_arrow</span>
+              <div id="player"  :style="playingAnimationState != 0 ? 'width:84px' : 'width:50px'">
+                <span v-if="playingAnimationState==0"class="material-icons" @click="playBuildingAnimation()">play_arrow</span>
               
-                <div v-else class="flex flex-row">
+                <div  :style="playingAnimationState==0 ? 'display:none !important' : 'display:flex'" class="d-flex flex-row">
               
                   <span class="material-icons me-3" @click="playingAnimationState == 2 ? resumeBuildingAnimation() : pauseBuildingAnimation()">
                     {{playingAnimationState == 2 ? 'play_arrow' : 'pause'}}
@@ -130,6 +135,8 @@
         </div>
         <!-- col-12 col-sm-6 p-0 m-0 border h-100 overflow-hidden -->
         <div v-if="model" class="p-0 m-0 border h-100 overflow-hidden">
+          <!-- 
+          RANGE INPUT PIXEL RATIO
           <input 
           type="range" 
           step="0.2"
@@ -138,7 +145,7 @@
           v-model="sliderValue" 
           @input="updateRendererPixelRatio"
         />
-        {{ sliderValue }}
+        {{ sliderValue }} -->
           <div
 
             id="accordionExample"
@@ -167,11 +174,12 @@
                 >
                   
                   <button 
+                    
                     type="button"
                     class="btn btn-ligh shadow-none" 
-                    @click.stop="toggleGroupVisibility(group, index)"
                   >
                     <span 
+                      @click.stop="toggleGroupVisibility(group, index)"
                       class="material-icons"
                       :id="'toggleGroupVisibility_'+index"
                     >visibility_off</span>
@@ -219,6 +227,20 @@
 
 </template>
 <style>
+
+#player {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #d2eaff;
+  border-radius: 100px;
+  width: fit-content;
+  gap: 15px;
+  align-items: center;
+
+  transition: all .15s ease-in-out;
+
+}
 
 #containerLoading{
     display: flex;

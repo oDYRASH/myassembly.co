@@ -11,8 +11,8 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/getting-started',
-      name: 'getting-started',
+      path: '/get-started',
+      name: 'get-started',
       component: () => import('../views/GetStarted.vue')
     },
     // dashboard

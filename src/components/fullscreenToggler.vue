@@ -8,11 +8,23 @@
             }
         }
     }
+
+    const props = defineProps({
+        right: {
+            type: Number,
+            default: 10
+        },
+        top: {
+            type: Number,
+            default: 10
+        }
+    });
+
 </script>
 
 <template>
 <!-- FullScreenToggleButton -->
-    <button class="js-toggle-fullscreen-btn toggle-fullscreen-btn" aria-label="Enter fullscreen mode" @click="toggleFS">
+    <button class="js-toggle-fullscreen-btn toggle-fullscreen-btn" aria-label="Enter fullscreen mode" @click="toggleFS" :style="`right:${right}px; top:${top}px`">
         <svg class="toggle-fullscreen-svg" width="28" height="28" viewBox="-2 -2 28 28">
             <g class="icon-fullscreen-enter">
                 <path d="M 2 9 v -7 h 7" />

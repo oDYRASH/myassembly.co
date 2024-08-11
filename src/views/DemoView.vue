@@ -1,35 +1,48 @@
 <script setup>
-import SideBar from '../components/SideBar.vue'
-import Assembly from '../components/Assembly.vue'
-import fullscreenToggler from '../components/fullscreenToggler.vue'
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+  import SideBar from '../components/SideBar.vue'
+  import Assembly from '../components/Assembly.vue'
+  import fullscreenToggler from '../components/fullscreenToggler.vue'
+  import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
 
-// Reactive state for the 3D model
-const assembly3DModel = ref(null);
+  // Reactive state for the 3D model
+  const assembly3DModel = ref(null);
 
-// Function to update the 3D model
-const updateAssembly = (model) => {
-  console.log('updateAssembly :', model);
-  assembly3DModel.value = model;
-};
+  // Function to update the 3D model
+  const updateAssembly = (model) => {
+    console.log('updateAssembly :', model);
+    assembly3DModel.value = model;
+  };
 
-const route = useRoute();
-const modelName = ref(route.params.modelName);
+  const route = useRoute();
+  const modelName = ref(route.params.modelName);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log('DOMContentLoaded');
+    const popoverTrigger = document.getElementById('popoverButton');
+    const popover = new bootstrap.Popover(popoverTrigger, {
+        trigger: 'manual'
+    });
+
+    // Trigger the popover after 20 seconds
+    setTimeout(() => {
+      console.log('showing popover');
+      popover.show();
+    }, 500);
+  });
 
 </script>
 
 <template>
-  <fullscreenToggler></fullscreenToggler>
-
+  <fullscreenToggler :right="10" :top="10"></fullscreenToggler>
   <div class="d-flex" style="overflow: hidden;">
-    <div class="d-flex flex-row" style="position: absolute; bottom: 10px; right: 10px; width: fit-content;">
+    <div class="d-flex flex-row" style="position: absolute; bottom: 10px; left: 10px; width: fit-content;">
 
       <!-- <a href="/" class="btn btn-dark font-weight-bold"
       style="background-color: #15171a !important;  z-index: 1000; font-weight: 700;"
       >MyAssembly.co
     </a> -->
-    <a href="/dashboard" class="btn btn-dark font-weight-bold"
+    <a href="/dashboard" class="btn btn-dark font-weight-bold fx01 vclass" id="popoverButton"
       style="background-color: #00A6ED!important; color: #171f38; z-index: 1000; font-weight: 700; align-items: center; justify-content: center; display: flex; flex-direction:row">
       <span class="material-icons" style="margin-right: 10px;">add</span>
         Build Your Own Assembly
@@ -37,7 +50,7 @@ const modelName = ref(route.params.modelName);
   
   </div>
     <!-- SIDE BAR -->
-    <SideBar :model="assembly3DModel"></SideBar>
+    <SideBar :model="assembly3DModel" :projectName="'Project_DEMO'"></SideBar>
     <!-- ASSEMBLY -->
     <Assembly @set-assembly="updateAssembly" :modelName="modelName ?  modelName : 'project_0'" :controls="true"></Assembly>
   </div>
@@ -55,5 +68,97 @@ const modelName = ref(route.params.modelName);
     margin: 0 auto;
     font-weight: normal;
   }
+  .fx01 {
+    color: white;
+    border: 4px solid black;
+    box-shadow: inset 0 0 0 1px black;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+    transition: all .3s ease-in-out;
+}
+
+.fx01 span {
+    transition: all 0.5s ease-out;
+    z-index: -2;
+}
+
+.fx01::after {
+    background: #fff;
+    border: 0 solid #000;
+    content: '';
+    height: 155px;
+    position: absolute;
+    left: -75px;
+    top: -50px;
+    opacity: .8;
+    transform: rotate(35deg);
+    width: 50px;
+    transition: all 1s cubic-bezier(.175, .52, .165, 1);
+    z-index: 1;
+}
+
+.fx01.vclass {
+    animation: fx01-loop 10s infinite ease-in-out;
+}
+
+@keyframes fx01-loop {
+    0%, 90% {
+        border: 4px solid black;
+        background-color: black;
+    }
+    95% {
+        border: 4px solid gray;
+        background-color: white;
+    }
+    100% {
+        border: 4px solid black;
+        background-color: black;
+    }
+}
+
+.fx01.vclass::after {
+    animation: fx01-after-loop 10s infinite cubic-bezier(.175, .52, .165, 1);
+}
+
+@keyframes fx01-after-loop {
+    40%, 80% {
+        left: -75px;
+        opacity: .8;
+        transform: rotate(35deg);
+        border: 0 solid #000;
+    }
+    85% {
+        left: 120%;
+        opacity: 0;
+        transform: rotate(40deg);
+        border: 20px solid #000;
+    }
+    100% {
+        left: -75px;
+        opacity: .8;
+        transform: rotate(35deg);
+        border: 0 solid #000;
+    }
+}
+
+.fx01.vclass span {
+    animation: fx01-span-loop 10s infinite ease-out;
+}
+
+@keyframes fx01-span-loop {
+    0%, 90% {
+        letter-spacing: normal;
+        color: white;
+    }
+    95% {
+        letter-spacing: .1em;
+        color: #333;
+    }
+    100% {
+        letter-spacing: normal;
+        color: white;
+    }
+}
 
 </style>
