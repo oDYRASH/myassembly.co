@@ -5,17 +5,20 @@
     height: 65px;
     width: 25px;
     padding-left: 2px;
-    background: #feffff;
+    background: #171f38;
     color: #171f38;
     outline: none;
     border: none;
     z-index: 2;
 }
+.accordion-item{
+    background-color: #171f38 !important;
+}
 
 #hideSideBar{
     font-weight: 900 !important;
     font-size: 1.5em;
-    background: #feffff;
+    background: #171f38;
     color: #171f38;
 }
 
@@ -29,9 +32,10 @@
     min-width: 23.6vw;
     max-width: 23.6vw;
     height: 100vh;
-    background: #feffff;
-    color: #171f38;
+    background: #171f38;
+    color: #ffffff;
     transition: all 0.3s;
+    border-right: white solid 1px !important;
 }
 .sideBarBody {
     overflow: auto;
@@ -54,16 +58,32 @@
     
 }
 
+.material-icons{
+    color: #ffffff;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff00;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+}
+
+.accordion-button{
+    background-color: #e7f1ff00;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+    border-top: solid 1px #ffffff;
+    color: #ffffff !important;
+}
+
+
+.accordion-button::before {
+    color: #ffffff !important;
+}
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #feffff;
-    color: #171f38;
+    color: #ffffff;
 }
 
-/* .sidebar-header{
-    border-bottom: 1px solid #171f384d;
-} */
 
 .btn-secondary {
     color: #fff;
@@ -79,7 +99,7 @@
 
     width: 281px;
     height: 281px;
-    background: #818698;
+    border: #ffffff solid 1px;
     border-radius:  0 273px 0 0 ;
 
     z-index: 2;

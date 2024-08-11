@@ -91,8 +91,24 @@
 </script>
 
 <template>
+
+
     <!-- Sidebar  -->
     <nav id="sidebar" class="">
+          <!-- :style="playingAnimationState != 0 ? 'width:84px; right:-65px' : 'width:50px;right:-46px'" -->
+    <div id="player"  :style="playingAnimationState != 0 ? 'width:84px; right:-84px' : 'width:50px;right:-50px'" style="position: absolute;  z-index: 88; ">
+      <span v-if="playingAnimationState==0"class="material-icons" @click.stop="playBuildingAnimation()">play_arrow</span>
+    
+      <div :style="playingAnimationState==0 ? 'display:none !important' : 'display:flex'" class="d-flex flex-row">
+    
+        <span class="material-icons me-3" @click.stop="playingAnimationState == 2 ? resumeBuildingAnimation() : pauseBuildingAnimation()">
+          {{playingAnimationState == 2 ? 'play_arrow' : 'pause'}}
+        </span>
+        <span class="material-icons" @click.stop="stopBuildingAnimation()">stop</span>
+    
+      </div>
+    
+    </div>
         <!-- toggleButton -->
         <button type="button" id="sidebarCollapse" :style="projectName == 'Project_DEMO' ? 'display:none' : 'display:block'">
             <span id="hideSideBar"><</span>
@@ -100,10 +116,10 @@
     
         <!-- Settings Controler  -->
         <div id="settingsControler" style="display: none !important;">
-            <button type="button" class="btn btn-light shadow-none" @click="props.model.resetCamera()">
+            <button type="button" class="btn btn-light shadow-none" @click.stop="props.model.resetCamera()">
                 <span class="material-icons">settings_backup_restore</span>
             </button>
-            <button type="button" class="btn btn-light shadow-none" @click="props.model.toggleAutorotate()">
+            <button type="button" class="btn btn-light shadow-none" @click.stop="props.model.toggleAutorotate()">
                 <span class="material-icons">rotate_right</span>
             </button>
         </div>
@@ -112,29 +128,17 @@
         <!-- Sidebar content -->
         <div class="sidebar-header">
             
-            <div class="d-flex flex-row" style=" align-items: center; gap: 15px;">
-              <h3 style="margin: 0px;">
+            <div class="d-flex flex-row" style=" align-items: center; gap: 15px; position: relative">
+              <h1 style="margin: 0px;">
                 {{projectName}}
-              </h3>
+              </h1>
 
-              <div id="player"  :style="playingAnimationState != 0 ? 'width:84px' : 'width:50px'">
-                <span v-if="playingAnimationState==0"class="material-icons" @click="playBuildingAnimation()">play_arrow</span>
-              
-                <div  :style="playingAnimationState==0 ? 'display:none !important' : 'display:flex'" class="d-flex flex-row">
-              
-                  <span class="material-icons me-3" @click="playingAnimationState == 2 ? resumeBuildingAnimation() : pauseBuildingAnimation()">
-                    {{playingAnimationState == 2 ? 'play_arrow' : 'pause'}}
-                  </span>
-                  <span class="material-icons" @click="stopBuildingAnimation()">stop</span>
-              
-                </div>
-              
-              </div>
+
 
             </div>
         </div>
         <!-- col-12 col-sm-6 p-0 m-0 border h-100 overflow-hidden -->
-        <div v-if="model" class="p-0 m-0 border h-100 overflow-hidden">
+        <div v-if="model" class="p-0 m-0 h-100 overflow-hidden">
           <!-- 
           RANGE INPUT PIXEL RATIO
           <input 
@@ -170,13 +174,13 @@
                 data-bs-toggle="collapse" 
                 style="font-weight: bold;
                       font-size: smaller;
-                      color: #171f38 !important;"
+                      color: white !important;"
                 >
                   
                   <button 
                     
                     type="button"
-                    class="btn btn-ligh shadow-none" 
+                    class="btn shadow-none" 
                   >
                     <span 
                       @click.stop="toggleGroupVisibility(group, index)"
@@ -193,7 +197,7 @@
 
               <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn btn-secondary m-1 shadow-none">
+                  <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn p-3 shadow-none" style="border-radius: 0px; color: white; border: white 1px solid !important;">
                     {{ item }}
                   </button>
                 </div>
@@ -232,11 +236,15 @@
   display: flex;
   justify-content: center;
   padding: 10px;
-  background: #d2eaff;
-  border-radius: 100px;
+  background: #d2eaff00;
+  border-radius: 0px;
   width: fit-content;
   gap: 15px;
   align-items: center;
+  border-bottom: solid  1px rgb(228, 228, 255);
+  border-right: solid  1px rgb(228, 228, 255);
+  
+  color: white !important;
 
   transition: all .15s ease-in-out;
 

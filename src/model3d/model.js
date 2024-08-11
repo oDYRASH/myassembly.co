@@ -113,23 +113,48 @@ export class Model {
         this.orbitControls.autoRotate = false;
     }
 
+    startAutorotate() {
+        this.orbitControls.autoRotate = true;
+    }
+
+
 
     // ANIMATION CONTROLER FUNCTIONS
     playBuildingAnimation() {
+
+        // start autorotate
+        this.startAutorotate();
+
+        // hide all panels
         this.hideAll();
+
+        // play animation
         this.animationControler.showPanelsWithDelay();
         
     }
 
     pauseBuildingAnimation() {
+        // stop autorotate
+        this.stopAutorotate();
+        // pause animation
         this.animationControler.pause();
     }
 
     resumeBuildingAnimation() {
+
+        // start autorotate
+        this.startAutorotate();
+
+        // resume animation
         this.animationControler.resume();
     }
 
     stopBuildingAnimation() {
+
+        // stop autorotate
+        this.stopAutorotate();
+
+        // stop animation
         this.animationControler.stop();
     }
 

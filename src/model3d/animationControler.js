@@ -2,7 +2,7 @@ export class PanelController {
 
   constructor(groups) {
 
-      console.log("PanelController built with groups: ", groups);
+    //   console.log("PanelController built with groups: ", groups);
 
       this.groups = groups;
       this.playing = false;
@@ -17,7 +17,7 @@ export class PanelController {
 
 
 
-      console.log("showPanelsWithDelay called");
+    //   console.log("showPanelsWithDelay called");
       this.playing = true;
       this.stopped = false;
       this.paused = false;
@@ -32,7 +32,7 @@ export class PanelController {
 
               // Wait for the pause to be released
               while (this.paused) {
-                  console.log("Paused");
+                //   console.log("Paused");
                   if (this.stopped) break;  // Exit if stopped
                   await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
               }
@@ -40,10 +40,10 @@ export class PanelController {
               if (this.stopped) break;  // Exit if stopped
 
               await new Promise(resolve => setTimeout(resolve, 333)); // Wait for 333ms
-              console.log("group :  ", group);
-              console.log("panelNames :  ", panelName);
+            //   console.log("group :  ", group);
+            //   console.log("panelNames :  ", panelName);
               const panel = group.panels[panelName];
-              console.log("panel :  ", panel);
+            //   console.log("panel :  ", panel);
               panel.show();
           }
       }
