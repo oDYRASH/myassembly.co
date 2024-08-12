@@ -14,7 +14,7 @@
         top: 0;
         left: 0;
     ">
-    <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" class="btn btn-dark d-flex flex-row"
+    <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" :key="$route.fullPath" class="btn btn-dark d-flex flex-row"
     style="background-color: #15171a !important; width: fit-content; position:absolute; top: 10px; left: 10px;"><p style="font-weight: bold; margin-right: 1ch;">ByPass</p></RouterLink>
     
         <main class="form-signin">

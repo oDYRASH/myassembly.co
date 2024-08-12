@@ -36,7 +36,7 @@ export class Model {
     addLabelToGroup(childrenArray, labelText) {
         if (childrenArray.length === 0) return;
     
-        console.log(childrenArray);
+        // console.log(childrenArray);
         // Calculate the geometric center of the group
         const center = new THREE.Vector3();
         const box = new THREE.Box3();
@@ -47,7 +47,7 @@ export class Model {
         });
     
         box.getCenter(center);
-        console.log("getting center", center);
+        // console.log("getting center", center);
         // Create the label
         const labelDiv = document.createElement('div');
         labelDiv.innerHTML = `

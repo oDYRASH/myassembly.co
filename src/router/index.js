@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 
 const router = createRouter({
@@ -8,12 +7,16 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: '/get-started',
       name: 'get-started',
       component: () => import('../views/GetStarted.vue')
+    },
+    {
+      path: '/demo',
+      redirect: '/demo/project_0'
     },
     // dashboard
     {
@@ -22,18 +25,24 @@ const router = createRouter({
       component: () => import('../views/Dashboard.vue')
     },
     {
-      path: '/demo',
-      redirect: '/demo/project_0'
-    },
-    {
       path: '/demo/:modelName',
       name: 'demo',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+
       component: () => import('../views/DemoView.vue'),
       props: true,
-    }
+    },
+    {
+      path: '/assembly-editor',
+      name: 'assembly-editor',
+
+      component: () => import('../views/AssemblyEditor.vue'),
+    },
+    // /404
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('../views/404.vue')
+    },
   ]
 })
 

@@ -34,12 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <template>
-
-  <RouterLink :to="{ name: 'dashboard' }" :key="$route.fullPath" class="btn btn-dark font-weight-bold" id="popoverButton">
+  <a href="/dashboard" class="btn btn-dark font-weight-bold" id="popoverButton">
     <span class="material-icons" style="margin-right: 10px; color: black !important;">add</span>
     Build Your Own Assembly
-  </RouterLink>
-
+  </a>
 
   <fullscreenToggler :right="10" :top="10"></fullscreenToggler>
   <div class="d-flex" style="overflow: hidden;">
@@ -56,8 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <!-- ASSEMBLY -->
     <Assembly 
       @set-assembly="updateAssembly" 
-      :modelName="modelName ? modelName : 'project_0'" 
-      :controls="true"
+      :modelName="modelName ? modelName : false" 
     ></Assembly>
   </div>
 </template>

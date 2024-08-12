@@ -7,8 +7,7 @@ const emit = defineEmits(['set-assembly']);
 // set props modelName
 const props = defineProps({
     modelName: {
-        type: String,
-        default: 'HomePageModel'
+        type: String
     }
 });
 
@@ -28,7 +27,9 @@ const setModel = (m) => {
             :autoSpin="true" 
             :controls="true"
             :callback="setModel" 
-            :modelName="modelName">
+            :modelName="modelName"
+            :preLoadedModel="modelName ? false : true"
+            >
         </Model3d>
     </div>
 </template>

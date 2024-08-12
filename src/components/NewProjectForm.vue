@@ -1,3 +1,34 @@
+<script setup>
+  import { useModelPreloadStore } from '@/stores/preLoadedModel'; // Adjust import path as needed
+  import { useRouter } from 'vue-router';
+  import { ref } from 'vue';
+
+  const loading = ref(false);
+  
+
+
+  const modelStore = useModelPreloadStore();
+
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+          const modelUrl = URL.createObjectURL(file);
+          modelStore.loadModel(modelUrl);
+      }
+  }
+
+
+  const router = useRouter();
+
+  function goToDashBoard() {
+    loading.value = true;
+    // Redirect to the dashboard
+    router.push({ name: 'assembly-editor' });
+  }
+
+</script>
+
+
 <template>
 
   <div class="modal-dialog">
@@ -22,7 +53,7 @@
                 </svg>
                 </div>
                 <p class="m-3">Select the 3D model for this project</p>
-                <input type="file" id="upload-file" name="uploaded-file" required>
+                <input type="file" id="3dModelFileInput" name="uploaded-file" required @change="handleFileUpload">
                 <p class="message">file format .glb .gltf</p>
             </div>
 
@@ -30,7 +61,16 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Create</button>
+
+
+        <a type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="goToDashBoard">
+          <span v-if="!loading">Create</span>
+          <span v-else>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </span>
+        </a>
+
       </div>
     </div>
   </div>
