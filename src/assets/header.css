@@ -9,3 +9,14 @@
 .pointer{
     cursor: pointer;
 }
+
+.breakpoint-section {
+    width: 50%;
+}
+
+@media screen and (max-width: 1380px) {
+    .breakpoint-section {
+        width: 100%;
+    }
+    
+}

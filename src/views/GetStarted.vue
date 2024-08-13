@@ -70,9 +70,10 @@ onMounted(() => {
         position: absolute;
         top: 0;
         left: 0;
+        overflow: hidden !important;
     ">
         <RouterLink :to="{ name: 'demo', params: { modelName: 'project_0' } }" :key="$route.fullPath" class="btn btn-dark d-flex flex-row"
-        style="background-color: #15171a !important; width: fit-content; position:absolute; top: 10px; left: 10px;"><p style="font-weight: bold; margin-right: 1ch;">ByPass</p></RouterLink>
+        style="background-color: transparent !important; width: fit-content; position:absolute; top: 10px; left: 10px;"><p style="font-weight: bold; margin-right: 1ch;">ByPass</p></RouterLink>
 
     <div class="d-flex flex-row align-items-center content-center gridstyle" style="height: 100vh;">
         <main class="form-signin d-flex flex-column align-items-center">

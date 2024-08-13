@@ -35,6 +35,11 @@ const router = createRouter({
 
       component: () => import('../views/AssemblyEditor.vue'),
     },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/Contact.vue')
+    },
     // /404
     {
       path: '/404',

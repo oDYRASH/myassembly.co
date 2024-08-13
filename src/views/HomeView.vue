@@ -2,6 +2,7 @@
   import Model3D from '../components/Model3D.vue'
   import { ref, onMounted, onUnmounted } from 'vue';
   import Header from '../components/Header.vue'
+  import GetStartedButton from '../components/GetStartedButton.vue'
 
   import { demoModelPreload } from '@/stores/preLoadedModel'; // Adjust import path as needed
 
@@ -57,37 +58,30 @@
   <Model3D v-if="modelPreloaded" :scrollPosition="scrollPosition" :modelName="'0258'" :assemblyContainerId="'homePageCanvas'" :controls="false" />
   <!-- START SECTIONS -->
   <section id="section1">
-    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w snipcss-fQaCS">
+    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w breakpoint-section">
       <div class="hl_headline-w">
           <h1 class="h1 hero-title">More than a website builder</h1>
       </div>
       <div class="hl_subheadline-w is--hero">
           <p class="paragraph-l u-text-gray200">With Webflow’s visual-first platform, marketers, designers, and devs alike can create, optimize, and scale web experiences that get results — all backed by enterprise-grade hosting and security.</p>
       </div>
-      <div class="button_group-w">
-          <div>
-              <div class="button-group">
-                  <a data-signup-cta="1" data-cta="homepage page CTA" data-cta-position="hero section" data-cta-text="start building" href="https://webflow.com/dashboard/signup" class="button w-inline-block">
-                      <div class="button-inner">
-                          <div>Start building</div>
-                      </div>
-                  </a>
-              </div>
-          </div>
-      </div>
+      <GetStartedButton :value="'Start building'"/>
     </div>
   </section>
 
   <section id="section2">
-    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w snipcss-fQaCS">
+    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w breakpoint-section">
         <div class="hl_headline-w">
-            <h1 class="h1 hero-title">Experience the Future: Building with Light Steel Framing</h1>
+          <h1 class="h1 hero-title">Experience the Future: Building with Light Steel Framing</h1>
         </div>
+        <p class="paragraph-l u-text-gray200">
+          LSF offers a multitude of advantages over traditional construction methods. Enjoy significantly faster construction times, allowing you to move into your dream space sooner. LSF buildings are incredibly strong and durable, resisting harsh weather conditions and standing the test of time. Additionally, LSF utilizes eco-friendly materials and reduces construction waste, making it a responsible choice for the planet.
+        </p>
     </div>
   </section>
 
   <section id="section3">
-    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w snipcss-fQaCS">
+    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w breakpoint-section">
         <div class="hl_headline-w">
             <h1 class="h1 hero-title">Built Faster, Built Smarter: Why Choose LSF?</h1>
         </div>
@@ -97,10 +91,12 @@
             </p>
         </div>
     </div>
+    <GetStartedButton/>
+
   </section>
 
   <section id="section4">
-    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w snipcss-fQaCS">
+    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w breakpoint-section">
         <div class="hl_headline-w">
             <h1 class="h1 hero-title">Strength You Can Trust, Sustainability You Can Embrace</h1>
         </div>
@@ -113,23 +109,25 @@
   </section>
 
   <section id="section5">
-    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w snipcss-fQaCS">
+    <div data-hero-content-wrap="" pointer-auto="" class="hero_content-w breakpoint-section">
         <div class="hl_headline-w">
             <h1 class="h1 hero-title">Dream It. Build It. Faster with LSF</h1>
         </div>
         <div class="hl_subheadline-w is--hero">
-            <p class="paragraph-l u-text-gray200" style="max-width: 33vw !important;">
+            <p class="paragraph-l u-text-gray200">
                 LSF isn't just about speed and efficiency; it's about unlocking your design potential. LSF's flexibility allows for a wide range of architectural styles and layouts, making it perfect for any vision you may have. Whether you dream of a modern masterpiece or a cozy cottage, LSF can help you bring it to life, faster than ever before.
             </p>
         </div>
     </div>
+    <GetStartedButton/>
+
   </section>
 
   <!-- END SECTION -->
 
 
   <!-- PRICING START -->
-  <div class="container py-3">
+  <div class="container py-3 mt-5">
     <header>
       <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
