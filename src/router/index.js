@@ -18,7 +18,6 @@ const router = createRouter({
       path: '/demo',
       redirect: '/demo/project_0'
     },
-    // dashboard
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -27,7 +26,6 @@ const router = createRouter({
     {
       path: '/demo/:modelName',
       name: 'demo',
-
       component: () => import('../views/DemoView.vue'),
       props: true,
     },

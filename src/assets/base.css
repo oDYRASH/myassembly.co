@@ -1,10 +1,10 @@
 :root {
   /* Light mode colors */
   --primary-color: #007bff;
-  --secondary-color: #6c757d;
+  --secondary-color: #a2a9b0;
   --background-color: #ffffff;
   --text-color: #212529;
-
+  
   /* Accent colors */
   --success-color: #28a745;
   --danger-color: #dc3545;
@@ -34,3 +34,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.c-p{
+  color: var(--primary-color);
+}
+
+.c-s{
+  color: var(--secondary-color);
+}
+

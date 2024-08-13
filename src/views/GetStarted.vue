@@ -1,5 +1,16 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'; // Adjust the path as necessary
+
+const router = useRouter()
+const userStore = useUserStore();
+
+const form = ref({
+  email: '',
+  password: ''
+});
+
 
 function parseJwt(token) {
   // Decode the JWT token to extract user information
@@ -16,14 +27,28 @@ function handleCredentialResponse(response) {
   const idToken = response.credential;
   const userInfo = parseJwt(idToken);
 
-  // Log user information such as email, name, and picture
-  console.log('User Info:', userInfo);
-  console.log('Email:', userInfo.email);
-  console.log('Name:', userInfo.name);
-  console.log('Picture:', userInfo.picture);
+  // Store userInfo in Pinia store
+  userStore.setUserInfo(userInfo);
+
+  // Redirect the user to the /dashboard route
+  router.push('/dashboard');
+}
+
+function handleFormSubmit(){
+  // Handle the form submission
+  const userInfo = {
+    email: form.value.email,
+    password: form.value.password
+  };
+
+  userStore.setUserInfo(userInfo);
+
+  // For now, we will just redirect the user to the /dashboard route
+  router.push('/dashboard');
 }
 
 onMounted(() => {
+
   // Initialize the Google sign-in button
   window.google.accounts.id.initialize({
     client_id: '93244253552-q2qn4t6vjerpf6mj1qgfduf69agfulas.apps.googleusercontent.com',
@@ -50,9 +75,39 @@ onMounted(() => {
         style="background-color: #15171a !important; width: fit-content; position:absolute; top: 10px; left: 10px;"><p style="font-weight: bold; margin-right: 1ch;">ByPass</p></RouterLink>
 
     <div class="d-flex flex-row align-items-center content-center gridstyle" style="height: 100vh;">
-        <main class="form-signin">
+        <main class="form-signin d-flex flex-column align-items-center">
+          <h2 class="mb-4">
+            Let's dive in !
+          </h2>
+            <form @submit.prevent="handleFormSubmit">
+              <div class="row gy-3 overflow-hidden">
+                <div class="col-12" style="display: none;">
+                  <div class="form-floating mb-3">
+                    <input type="text" disabled class="form-control" name="name" id="name" placeholder="Name" required>
+                    <label for="name" class="form-label">Name</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="email" class="form-control" v-model="form.email" name="email" id="email" placeholder="name@example.com" required>
+                    <label for="email" class="form-label">Email</label>
+                  </div>
+                </div>
+                <div class="col-12" style="    margin-top: 0px;">
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" v-model="form.password" name="password" id="password" value="" placeholder="Password" required>
+                    <label for="password" class="form-label">Password</label>
+                  </div>
+                </div>
 
-          
+                  <div class="d-flex flex-row justify-content-evenly">
+                    <button class="btn btn-outline-secondary" style="width: 45%; border: solid #cfcbcb 1px !important;" type="submit">Sign In</button>
+                    <button class="btn btn-primary btn-lg" style="width: 45%;" type="submit">Sign up</button>
+                </div>
+
+              </div>
+            </form>
+            <hr style="width: 90%; margin: 20px 0px">
             <div>
                 <div id="g_id_onload"
                     data-client_id="93244253552-q2qn4t6vjerpf6mj1qgfduf69agfulas.apps.googleusercontent.com"
@@ -60,35 +115,7 @@ onMounted(() => {
                 </div>
                 <div class="g_id_signin" data-type="standard"></div>
             </div>
-         
 
-
-
-
-            <form>
-                <h1 class="h3 lg-5 fw-normal">Please sign in</h1>
-
-                <div class="form-floating lg-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Name</label>
-                </div>
-
-                <div class="form-floating lg-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
-                </div>
-
-                <div class="form-floating lg-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                </div>
-
-                <div class="checkbox lg-3">
-
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <p class="mt-5 lg-3 text-muted">©MyAssembly.co 2024</p>
-            </form>
             </main>
     </div>
 </div>
@@ -114,6 +141,13 @@ onMounted(() => {
     background-image: radial-gradient(circle, rgb(203 213 225) 2px, #fff 2px);
     background-size: 2.5rem 2.5rem;
     background-position: center center;
+}
+
+.form-signin{
+  max-width: 390px !important;
+  padding: 35px !important;
+  background-color: #fff;
+  border: 1px rgb(50, 54, 88) solid;
 }
 
 </style>
