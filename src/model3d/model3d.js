@@ -123,8 +123,14 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     }else if(window.location.href.includes('demo') || window.location.pathname == "/" ){ 
 
         console.log('Loading demo model FROM STORE');
-        const demoModel = demoModelPreload().getData().clone();
+        const storedData = demoModelPreload().getData()
 
+        if(!storedData){
+            loadModelByFileName('demo');
+            return;
+        }
+
+        const demoModel = storedData.clone();
         scene.add(demoModel);
         const box = new THREE.Box3().setFromObject(demoModel);
         const center = box.getCenter(new THREE.Vector3());

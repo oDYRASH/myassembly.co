@@ -31,7 +31,7 @@ function handleCredentialResponse(response) {
   userStore.setUserInfo(userInfo);
 
   // Redirect the user to the /dashboard route
-  router.push('/dashboard');
+  router.push('/demo');
 }
 
 function handleFormSubmit(){
@@ -44,7 +44,12 @@ function handleFormSubmit(){
   userStore.setUserInfo(userInfo);
 
   // For now, we will just redirect the user to the /dashboard route
-  router.push('/dashboard');
+  router.push('/demo');
+}
+
+// localstore user info
+function storeUserInfo(userInfo) {
+  localStorage.setItem('userInfo', JSON.stringify(userInfo));
 }
 
 onMounted(() => {

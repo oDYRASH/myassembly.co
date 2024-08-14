@@ -46,7 +46,7 @@ export const demoModelPreload = defineStore('demoModelPreload', {
     actions: {
       loadModel() {
         console.log('Preloading DEMO model');
-        const demoModelUrl = 'https://myassembly.co/src/assets/glbModel/project_0.glb';
+        const demoModelUrl = 'https://myassembly.co/src/assets/glbModel/demo.glb';
         const loader = new GLTFLoader();
   
         return new Promise((resolve, reject) => {
