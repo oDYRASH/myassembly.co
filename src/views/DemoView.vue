@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <!-- ASSEMBLY -->
     <Assembly 
       @set-assembly="updateAssembly" 
-      :modelName="modelName ? modelName : 'project_0'" 
+      :modelName="modelName ? modelName : 'demo'" 
       :controls="true"
     ></Assembly>
   </div>
