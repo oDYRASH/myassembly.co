@@ -1,10 +1,20 @@
 <script setup>
-
+  import { useRouter } from 'vue-router'
   import NewProjectForm from '../components/NewProjectForm.vue'
   import { useUserStore } from '@/stores/user'; // Adjust the path as necessary
 
+  function getUserInfo() {
+    const userInfo = localStorage.getItem('userInfo');
+    return userInfo ? JSON.parse(userInfo) : null;
+  }
+
   const userStore = useUserStore();
-  const userInfo = userStore.getUserInfo || {family_name : "Stark",given_name: "Tony" , picture : "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png", email: "tony@myassembly.co"};
+  const userInfo = userStore.getUserInfo || getUserInfo();
+
+  if(!userInfo) {
+    const router = useRouter()
+    router.push('/get-started');
+  }
 
 </script>
 

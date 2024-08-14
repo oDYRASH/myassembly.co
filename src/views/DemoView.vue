@@ -95,6 +95,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
 }
 
+@media screen and (pointer: coarse) {
+  #popoverButton {
+    right: 10px;
+    left: auto;
+  }
+  
+}
+
 .fx01 {
   color: white;
   border: 1px solid rgb(255, 255, 255);

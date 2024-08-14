@@ -5,14 +5,15 @@ import { Panel } from './panel.js';
 import { isPanelName, isPanelPart, sortArrayByLastNumber, getElementGroups } from '../stores/utils.js';
 import { PanelController } from './animationControler.js';
 
-
 export class Model {
 
-    constructor(model, orbitControls, renderer) {
+    constructor(model, orbitControls, renderer, camera) {
 
         this.renderer = renderer;
         this.model = model;
         this.orbitControls = orbitControls;
+
+        this.camera = camera;
 
         this.groups = {};
 
@@ -20,12 +21,14 @@ export class Model {
 
         this.animationControler;
 
+        this.mode = "ifc";
+
         this.init();
     }
   
     init() {
 
-        this.setGroups();
+        this.setGroups(this.mode);
 
         this.animationControler = new PanelController(this.groups);
 
@@ -87,27 +90,37 @@ export class Model {
     togglePanelVisibility(panelName) {
         const panel = this.getPanel(panelName);
 
-        this.addLabelToGroup(panel.getElements(), panelName);
+        // this.addLabelToGroup(panel.getElements(), panelName);
 
-        // panel.toggleVisibility();
+        panel.toggleVisibility();
     }
 
-    toggleGroupVisibility(groupName) {
-        this.getGroup(groupName).toggleVisibility();
+    hideGroup(groupName) {
+        this.getGroup(groupName).hide();
     }
 
-    hideAll() {
+    showGroup(groupName) {
+        this.getGroup(groupName).show();
+    }
+
+
+    hideAll(opacity=0) {
         Object.keys(this.groups).forEach(groupName => {
-            this.getGroup(groupName).hide();
+            this.getGroup(groupName).hide(opacity);
         });
     }
 
-    showAll() {
+    showAll(opacity=1) {
         Object.keys(this.groups).forEach(groupName => {
-            this.getGroup(groupName).show();
+            this.getGroup(groupName).show(opacity);
         });
     }
 
+    showThePanel(panelName) {
+        this.hideAll(0.12);
+        this.getPanel(panelName).show();
+    }
+    
     // ANIMATION FUNCTIONS
     stopAutorotate() {
         this.orbitControls.autoRotate = false;
@@ -185,12 +198,12 @@ export class Model {
 
     getPanel(panelName) {
 
-        let group = this.getGroup(getElementGroups(panelName));
+        let group = this.mode == "glb" ? this.getGroup("Group") : this.getGroup(getElementGroups(panelName));
         return group.getPanel(panelName);
     }
     
     //INIT FUNCTIONS
-    setGroups(){
+    setGroupsIfc(){
 
         let existingGroups = [];
 
@@ -199,7 +212,8 @@ export class Model {
         this.model.traverse((child) => {
 
             const name = child.name;
-
+            this.allowTransprencyOnChild(child);
+            console.log(name);
             let panelName = isPanelName(name)
   
             if (panelName) {
@@ -226,15 +240,62 @@ export class Model {
 
     }
 
+    setGroupsGlb() {
+
+        console.log("setting groups for", this.mode);
+
+
+        this.groups["Group"] = new Group("Group");
+
+        this.model.traverse((child) => {
+            if (child.isMesh) {
+                this.allowTransprencyOnChild(child);
+
+                this.groups["Group"].addPanel(new Panel(child.name));
+                this.groups["Group"].getPanel(child.name).addElement(child);
+            }
+        });
+
+        this.setGroupsName();
+
+
+    }
+
+    setGroups() {
+    
+        if(this.mode === "ifc"){
+            this.setGroupsIfc();
+        }
+
+        if(this.mode === "glb"){
+            this.setGroupsGlb();
+        }
+    }
+
     allowTransprencyOnChild(child) {
+        
+        console.log("checkin mesh");
+
         if (child.isMesh) {
+
+            console.log("setting transparency on child", child.name);
+
+            const metalMaterial = new THREE.MeshStandardMaterial({
+                color: 0xebebeb, // Grayish color
+                transparent: true,
+                opacity: 1
+            });
+        
+            child.material = metalMaterial;
+
             child.material.transparent = true; // Ensure transparency support
             child.material.opacity = 1; // Set initial opacity to 1
-            child.userData.originalPosition = child.position.clone();
+            // child.userData.originalPosition = child.position.clone();
             child.material = child.material.clone();
   
-            const direction = new THREE.Vector3().copy(child.position).normalize();
-            child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
+
+            // const direction = new THREE.Vector3().copy(child.position).normalize();
+            // child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
         }
     }
 

@@ -20,7 +20,7 @@ const setModel = (m) => {
 
 <template>
     <div id="assembly-container">
-        <canvas id="assemblyScene" style="width: -webkit-fill-available"></canvas>
+        <canvas id="assemblyScene" style="width: -webkit-fill-available; z-index: 9;"></canvas>
         <Model3d 
             :scrollPosition="0" 
             :assemblyContainerId="'assemblyScene'" 

@@ -34,11 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <template>
-  <a href="/dashboard" class="btn btn-dark font-weight-bold" id="popoverButton">
-    <span class="material-icons" style="margin-right: 10px; color: black !important;">add</span>
-    Build Your Own Assembly
-  </a>
-
   <fullscreenToggler :right="10" :top="10"></fullscreenToggler>
   <div class="d-flex" style="overflow: hidden;">
     <div class="d-flex flex-row" style="position: absolute; bottom: 10px; left: 10px; width: fit-content;">

@@ -37,6 +37,10 @@
         }
     });
 
+    function showThePanel(panelName){
+      props.model.showThePanel(panelName)
+    }
+
     function toggelPanelVisibility(panelName) {
         //use method show on the model option
         props.model.togglePanelVisibility(panelName)
@@ -52,8 +56,12 @@
 
     function toggleGroupVisibility(gropuName, index) {
       //stop propagation
-      let toggleFrom = document.getElementById('toggleGroupVisibility_'+index).innerText
-      props.model.toggleGroupVisibility(gropuName)
+      let toggleButton = document.getElementById('toggleGroupVisibility_'+index)
+      let currentState = toggleButton.innerText
+
+      toggleButton.innerText = currentState == "visibility" ? "visibility_off" : "visibility"
+
+      currentState == "visibility" ? props.model.hideGroup(gropuName) : props.model.showGroup(gropuName)
     }
 
 
@@ -129,9 +137,9 @@
         <div class="sidebar-header">
             
             <div class="d-flex flex-row" style=" align-items: center; gap: 15px; position: relative">
-              <h1 style="margin: 0px;">
+              <h3 style="margin: 0px;">
                 {{projectName}}
-              </h1>
+              </h3>
 
 
 
@@ -186,7 +194,7 @@
                       @click.stop="toggleGroupVisibility(group, index)"
                       class="material-icons"
                       :id="'toggleGroupVisibility_'+index"
-                    >visibility_off</span>
+                    >visibility</span>
 
                   </button>
                   
@@ -197,7 +205,7 @@
 
               <div :id="'collapse_'+index" :class="index ? 'accordion-collapse collapse' : 'accordion-collapse collapse show'" :aria-labelledby="'heading_'+index" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  <button  v-for="(item, index) in items" :key="index" @click="toggelPanelVisibility(item)" type="button" class="btn p-3 shadow-none" style="border-radius: 0px; color: white; border: white 1px solid !important;">
+                  <button  v-for="(item, index) in items" :key="index" @click="showThePanel(item)" type="button" class="btn p-3 shadow-none" style="border-radius: 0px; color: white; border: white 1px solid !important;">
                     {{ item }}
                   </button>
                 </div>
@@ -247,6 +255,8 @@
   color: white !important;
 
   transition: all .15s ease-in-out;
+
+  z-index: 10;
 
 }
 

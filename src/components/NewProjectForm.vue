@@ -4,13 +4,14 @@
   import { ref } from 'vue';
 
   const loading = ref(false);
-  
+  const loadedFile = ref(null);
 
 
   const modelStore = useModelPreloadStore();
 
   function handleFileUpload(event) {
     const file = event.target.files[0];
+    loadedFile.value = file.name;
     if (file) {
           const modelUrl = URL.createObjectURL(file);
           modelStore.loadModel(modelUrl);
@@ -23,7 +24,7 @@
   function goToDashBoard() {
     loading.value = true;
     // Redirect to the dashboard
-    router.push({ name: 'assembly-editor' });
+    router.replace({ name: 'assembly-editor' });
   }
 
 </script>
@@ -52,9 +53,9 @@
                     <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
                 </svg>
                 </div>
-                <p class="m-3">Select the 3D model for this project</p>
+                <p class="m-3" :style="loadedFile ? 'font-size:25px; font-weight:bold;' : ''">{{ loadedFile ? loadedFile : "Select the 3D model for this project"}}</p>
                 <input type="file" id="3dModelFileInput" name="uploaded-file" required @change="handleFileUpload">
-                <p class="message">file format .glb .gltf</p>
+                <p v-if="!loadedFile" class="message">file format .glb .gltf</p>
             </div>
 
         </form>

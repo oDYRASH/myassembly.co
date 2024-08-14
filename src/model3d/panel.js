@@ -1,3 +1,5 @@
+import { opacityTransition } from './modelAnimation.js';
+
 export class Panel {
     constructor(name) {
       this.name = name;
@@ -17,27 +19,26 @@ export class Panel {
       return this.elements;
     }
   
-    hide() {
-
-      this.elements.forEach(el => {
-        el.material.opacity = 0;
-      });
-
+    hide(opacity=0) {
+      this.setOpacity(opacity);
       this.visible = false;
 
     }
   
-    show() {
+    show(opacity=1) {
 
-      this.elements.forEach(el => {
-        el.material.opacity = 1;
-      });
-
+      this.setOpacity(opacity);
       this.visible = true;
+
     }
 
     toggleVisibility() {
       console.log("from PANEL Class, toggleVisibility()")
       this.visible ? this.hide() : this.show();
     }
+
+    setOpacity(opacity) {
+      opacityTransition(this.elements, opacity);
+    }
+
 }

@@ -8,11 +8,23 @@
 
 
   const modelPreloaded = ref(false);
+  const modelStorage = demoModelPreload();
 
-  demoModelPreload().loadModel().then(() => {
-    console.log('HOME VIEW: Model preloaded');
+
+  if (modelStorage.getData()) {
+    console.log('HOME VIEW: Model already LOADED');
     modelPreloaded.value = true;
-  });
+  
+  }else{
+
+    modelStorage.loadModel().then(() => {
+      console.log('HOME VIEW: Model preloaded');
+
+      modelPreloaded.value = true;
+    });
+
+  }
+
 
   // Define a debounce function
   function debounce(func, wait) {

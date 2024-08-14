@@ -1,17 +1,24 @@
 import * as THREE from 'three';
+
+import Stats from 'stats-js';
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Tween, Easing, Group } from '@tweenjs/tween.js';
+import { Group } from '@tweenjs/tween.js';
 
 import { Model } from '@/model3d/model.js';
+import { openingAnimation, TG } from '@/model3d/modelAnimation.js';
 import { useModelPreloadStore, demoModelPreload } from '@/stores/preLoadedModel'; // Adjust import path as needed
 
     
-let scene, camera, renderer, TG, orbitControls, pivot, labelRenderer, cId, animationFrameId;
+let scene, camera, renderer, orbitControls, pivot, labelRenderer, cId, animationFrameId;
 
 
 function initThreeJs(containerId = null, autoSpin = false, controls = true, callback = null, modelName, preloadedModel=false) {
+    
+    
+    const atHomePage = window.location.pathname == "/";
+
     cId = containerId;
     const modelColor = 0xffffff; // 0x242331
     const sceneColor = 0xffffff; // 0xFBF7F4
@@ -19,8 +26,6 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     const base = { x: 0, y: 4, z: 14 };
     const sceneContainer = document.getElementById(containerId);
     
-    TG = new Group();
-
     // Scene
     scene = new THREE.Scene();
 
@@ -37,14 +42,15 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     const pr = window.devicePixelRatio 
     renderer.setPixelRatio(pr);
     
-    console.log('pixel ratio', pr);
     // Label renderer
     labelRenderer = new CSS2DRenderer();
 
     if (containerId) {
+        console.log('Container ID provided');
         renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
         labelRenderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
     } else {
+        console.log('No container ID provided');
         renderer.setSize(window.innerWidth, window.innerHeight);
         labelRenderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
@@ -56,6 +62,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     document.body.appendChild(labelRenderer.domElement);
 
     if (controls) {
+        console.log('Controls enabled');
         // Controls
         orbitControls = new OrbitControls(camera, renderer.domElement);
         orbitControls.enableDamping = true;
@@ -66,12 +73,14 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
         orbitControls.enablePan = false;
         orbitControls.minPolarAngle = Math.PI / 4;
         orbitControls.maxPolarAngle = Math.PI / 1.5;
-        orbitControls.minDistance = 10;
-        orbitControls.maxDistance = 20;
+        // orbitControls.minDistance = 10;
+        // orbitControls.maxDistance = 20;
+    }else{
+        console.log('No controls');
     }
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, .5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);
 
     const dirLight = new THREE.DirectionalLight(0xffffff, 3);
@@ -93,13 +102,13 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     hemiLight.position.set(0, 20, 0);
     scene.add(hemiLight);
 
-    const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
-    pointLight1.position.set(10, 10, 10);
-    scene.add(pointLight1);
+    // const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
+    // pointLight1.position.set(10, 10, 10);
+    // scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
-    pointLight2.position.set(-10, -10, -10);
-    scene.add(pointLight2);
+    // const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
+    // pointLight2.position.set(-10, -10, -10);
+    // scene.add(pointLight2);
 
 
     if(preloadedModel===true) {
@@ -111,18 +120,10 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
             return;
         }
         const preloadedModel = storedData.clone();
-        
-        scene.add(preloadedModel);
-        const box = new THREE.Box3().setFromObject(preloadedModel);
-        const center = box.getCenter(new THREE.Vector3());
-        preloadedModel.position.set(-center.x, -center.y, -center.z);
-        const model3D = new Model(preloadedModel, orbitControls, renderer);
-        if (callback) {
-            callback(model3D);
-        }
-    }else if(window.location.href.includes('demo') || window.location.pathname == "/" ){ 
+        loadModel(preloadedModel);    
 
-        console.log('Loading demo model FROM STORE');
+    }else if(window.location.href.includes('demo') || atHomePage ){ 
+
         const storedData = demoModelPreload().getData()
 
         if(!storedData){
@@ -131,34 +132,28 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
         }
 
         const demoModel = storedData.clone();
-        scene.add(demoModel);
-        const box = new THREE.Box3().setFromObject(demoModel);
-        const center = box.getCenter(new THREE.Vector3());
-        demoModel.position.set(-center.x, -center.y, -center.z);
-        const model3D = new Model(demoModel, orbitControls, renderer);
-        if (callback) {
-            callback(model3D);
-        }
+        loadModel(demoModel);    
     
     
     }else{
-
+        console.log('Else : loadModelByFileName');
         loadModelByFileName(modelName);
 
     }
 
     function loadModelByFileName(modelName) {
-        console.log('Loading model from URL');
+        console.log('Loading model from URL :', modelName);
         new GLTFLoader().load(`https://myassembly.co/src/assets/glbModel/${modelName}.glb`, (loadedModel) => {
-            loadModel(loadedModel);
+            loadModel(loadedModel.scene);
         });
     }
 
 
 
-    function loadModel(loadedModel) {
-        let model = loadedModel.scene;
+    function loadModel(model) {
+        console.log("MODEL :", model);
         model.name = 'modelHomeView';
+
         scene.add(model);
         
         pivot = new THREE.Object3D();
@@ -189,7 +184,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
             model.scale.copy(originalScale);
         });
 
-        document.getElementById('sidebarCollapse').addEventListener('click', () => {
+        if(!atHomePage){ document.getElementById('sidebarCollapse').addEventListener('click', () => {
 
             document.getElementById('assemblyScene').style.width = '-webkit-fill-available';
 
@@ -211,25 +206,71 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
                 }
             }, 333); // Match this duration with the CSS transition time for the sidebar
         });
-        
-        const model3D = new Model(model, orbitControls, renderer);
+
+        fitCameraToModel(camera, model, orbitControls);
+
+    }else{
+        openingAnimation(base, camera);
+    }
+
+
+        console.log('Model loaded, initializing Model class');
+        const model3D = new Model(model, orbitControls, renderer, camera);
         if (callback) {
             callback(model3D);
         }
     }
 
+
+
     // Animation loop
     const animate = () => {
+
         animationFrameId = requestAnimationFrame(animate);
         TG.update();
+        
+        // monitored code here
         renderer.render(scene, camera);
-        if (orbitControls) orbitControls.update();
+        if (orbitControls) {
+            orbitControls.update();
+        }
         labelRenderer.render(scene, camera);
+
     };
 
     animate();
 
 };
+
+
+function fitCameraToModel(camera, model, controls, offset = 1.25) {
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180);
+    const distance = Math.abs(maxDim / 2 / Math.sin(fov / 2));
+
+    camera.position.set(center.x, center.y, distance * offset);
+    camera.lookAt(center);
+
+    // Adjust near and far planes
+    const minZ = box.min.z;
+    const cameraToFarEdge = (minZ < 0) ? -minZ + distance * offset : distance * offset - minZ;
+
+    camera.near = cameraToFarEdge / 100;
+    camera.far = cameraToFarEdge * 100;
+    camera.updateProjectionMatrix();
+
+    if (controls) {
+        controls.target.copy(center);
+        controls.update();
+    }
+
+    console.log('Camera position:', camera.position);
+    console.log('Camera near/far:', camera.near, camera.far);
+}
 
 
 
@@ -284,7 +325,7 @@ export function cleanupModelScene() {
     }
 
     camera = null;
-    TG = null;
+    TG.removeAll();
 
     if(cId){
         const sceneContainer = document.getElementById(cId);

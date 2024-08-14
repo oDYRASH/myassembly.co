@@ -29,6 +29,7 @@ function handleCredentialResponse(response) {
 
   // Store userInfo in Pinia store
   userStore.setUserInfo(userInfo);
+  storeUserInfo(userInfo);
 
   // Redirect the user to the /dashboard route
   router.push('/demo');
@@ -42,7 +43,7 @@ function handleFormSubmit(){
   };
 
   userStore.setUserInfo(userInfo);
-
+  storeUserInfo(userInfo);
   // For now, we will just redirect the user to the /dashboard route
   router.push('/demo');
 }
@@ -50,6 +51,11 @@ function handleFormSubmit(){
 // localstore user info
 function storeUserInfo(userInfo) {
   localStorage.setItem('userInfo', JSON.stringify(userInfo));
+}
+
+function getUserInfo() {
+  const userInfo = localStorage.getItem('userInfo');
+  return userInfo ? JSON.parse(userInfo) : null;
 }
 
 onMounted(() => {

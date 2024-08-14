@@ -27,15 +27,15 @@ export class Group {
       }
     }
 
-    hide() {
+    hide(opacity=0) {
       for (let panel in this.panels) {
-        this.panels[panel].hide();
+        this.panels[panel].hide(opacity);
       }
     }
 
-    show() {
+    show(opacity=1) {
       for (let panel in this.panels) {
-        this.panels[panel].show();
+        this.panels[panel].show(opacity);
       }
     }
 

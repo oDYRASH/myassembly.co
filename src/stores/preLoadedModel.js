@@ -39,7 +39,7 @@ export const useModelPreloadStore = defineStore('modelPreload', {
 });
 
 
-export const demoModelPreload = defineStore('demoModelPreload', {
+export const demoModelPreload =  defineStore('demoModelPreload', {
     state: () => ({
       model: null, // Store the Three.js model directly
     }),

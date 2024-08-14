@@ -13,6 +13,7 @@
     "@tresjs/core": "^4.2.5",
     "@tweenjs/tween.js": "^25.0.0",
     "pinia": "^2.1.7",
+    "stats-js": "^1.0.1",
     "three": "^0.167.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
