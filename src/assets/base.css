@@ -1,15 +1,7 @@
 :root {
-  /* Light mode colors */
-  --primary-color: #007bff;
   --secondary-color: #a2a9b0;
-  --background-color: #ffffff;
-  --text-color: #212529;
-  
-  /* Accent colors */
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --warning-color: #ffc107;
-  --info-color: #17a2b8;
+  --background-color: #0D0D1C;
+  --text-color: #F3F3F3;
 }
 
 
@@ -23,7 +15,7 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
+  color: var(--text-color);
   background: var(--background-color);
   transition:
     color 0.5s,
@@ -35,11 +27,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.c-p{
-  color: var(--primary-color);
+span, button {
+  cursor: pointer;
 }
 
-.c-s{
-  color: var(--secondary-color);
+.btn:focus, .btn:active, .btn {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 

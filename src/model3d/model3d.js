@@ -23,7 +23,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     const modelColor = 0xffffff; // 0x242331
     const sceneColor = 0xffffff; // 0xFBF7F4
     
-    const base = { x: 0, y: 4, z: 14 };
+    const base = { x: 0, y: 5, z: 18 };
     const sceneContainer = document.getElementById(containerId);
     
     // Scene
@@ -93,22 +93,6 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
     dirLight.shadow.camera.near = 0.1;
     dirLight.shadow.camera.far = 40;
     scene.add(dirLight);
-
-    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
-    dirLight2.position.set(-10, 10, -10);
-    scene.add(dirLight2);
-
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.7);
-    hemiLight.position.set(0, 20, 0);
-    scene.add(hemiLight);
-
-    // const pointLight1 = new THREE.PointLight(0xffffff, 1, 50);
-    // pointLight1.position.set(10, 10, 10);
-    // scene.add(pointLight1);
-
-    // const pointLight2 = new THREE.PointLight(0xffffff, 1, 50);
-    // pointLight2.position.set(-10, -10, -10);
-    // scene.add(pointLight2);
 
 
     if(preloadedModel===true) {
@@ -207,7 +191,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
             }, 333); // Match this duration with the CSS transition time for the sidebar
         });
 
-        fitCameraToModel(camera, model, orbitControls);
+        // fitCameraToModel(camera, model, orbitControls);
 
     }else{
         openingAnimation(base, camera);

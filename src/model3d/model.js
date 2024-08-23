@@ -213,7 +213,7 @@ export class Model {
 
             const name = child.name;
             this.allowTransprencyOnChild(child);
-            console.log(name);
+            // console.log(name);
             let panelName = isPanelName(name)
   
             if (panelName) {
@@ -274,19 +274,19 @@ export class Model {
 
     allowTransprencyOnChild(child) {
         
-        console.log("checkin mesh");
+        // console.log("checkin mesh");
 
         if (child.isMesh) {
 
-            console.log("setting transparency on child", child.name);
+            // console.log("setting transparency on child", child.name);
 
-            const metalMaterial = new THREE.MeshStandardMaterial({
-                color: 0xebebeb, // Grayish color
-                transparent: true,
-                opacity: 1
-            });
+            // const metalMaterial = new THREE.MeshStandardMaterial({
+            //     color: 0xebebeb, // Grayish color
+            //     transparent: true,
+            //     opacity: 1
+            // });
         
-            child.material = metalMaterial;
+            // child.material = metalMaterial;
 
             child.material.transparent = true; // Ensure transparency support
             child.material.opacity = 1; // Set initial opacity to 1

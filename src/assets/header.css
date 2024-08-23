@@ -1,12 +1,13 @@
-.header_link{
-    margin-left: 40px;;
+.header_link {
+    margin-left: 40px;
+    ;
 }
 
-.padding-header{    
+.padding-header {
     padding-top: 3vmin;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
@@ -18,5 +19,32 @@
     .breakpoint-section {
         width: 100%;
     }
-    
+
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.navbar-toggler {
+    border-color: none !important;
+    border: none !important;
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.brand-name {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.navbar-nav {
+    justify-self: center;
+    align-self: center;
+    width: -webkit-fill-available;
+    justify-content: center;
 }

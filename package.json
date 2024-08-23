@@ -12,6 +12,7 @@
     "@tresjs/cientos": "^3.9.0",
     "@tresjs/core": "^4.2.5",
     "@tweenjs/tween.js": "^25.0.0",
+    "particles.js": "^2.0.0",
     "pinia": "^2.1.7",
     "stats-js": "^1.0.1",
     "three": "^0.167.1",
