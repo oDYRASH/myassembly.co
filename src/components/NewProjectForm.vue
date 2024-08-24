@@ -20,11 +20,11 @@
 
 
   const router = useRouter();
-
+  const projectName = ref('');
   function goToDashBoard() {
     loading.value = true;
     // Redirect to the dashboard
-    router.replace({ name: 'assembly-editor' });
+    router.push({ name: 'assembly-editor', params: { projectName: projectName.value } });
   }
 
 </script>
@@ -35,14 +35,14 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Project</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: #0D0D1C;">Create New Project</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
             <div class="input-group flex-nowrap mb-3">
                 <span class="input-group-text" id="addon-wrapping">#</span>
-                <input type="text" class="form-control" required placeholder="My Anwsome Project" aria-label="ProjectName" aria-describedby="addon-wrapping">
+                <input type="text" v-model="projectName" class="form-control" required placeholder="My Anwsome Project" aria-label="ProjectName" aria-describedby="addon-wrapping">
             </div>            
 
             <div class="dropzone-area">

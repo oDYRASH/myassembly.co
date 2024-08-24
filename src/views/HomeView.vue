@@ -139,7 +139,7 @@
 
 
   <!-- PRICING START -->
-  <div class="container py-3 mt-5">
+  <!-- <div class="container py-3 mt-5">
     <header>
       <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
@@ -308,7 +308,7 @@
         </div>
       </div>
     </footer>
-  </div>
+  </div> -->
   <!-- PRICING END -->
 
 </template>
@@ -333,11 +333,14 @@
   @media screen and (max-width: 1380px) {
     #homePageCanvas {
       width: 100vw !important;
-      height: 45vh !important;
+      height: 35vh !important;
       left: 0;
       right: 0;
       bottom: 0px;
-      background-color: white;
+      background-color: var(--background-color);
+    }
+    section {
+      height: auto;
     }
   }
 

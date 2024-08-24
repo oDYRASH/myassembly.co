@@ -118,7 +118,7 @@
     
     </div>
         <!-- toggleButton -->
-        <button type="button" id="sidebarCollapse" :style="projectName == 'Project_DEMO' ? 'display:none' : 'display:block'">
+        <button type="button" id="sidebarCollapse" :style="projectName == 'Project_DEMO' ? 'display:none' : 'display:none'">
             <span id="hideSideBar"><</span>
         </button>
     

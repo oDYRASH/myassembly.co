@@ -16,6 +16,9 @@ const updateAssembly = (model) => {
 
 const route = useRoute();
 const modelName = ref(route.params.modelName);
+const projectName = ref(route.params.projectName);
+
+console.log('route params :', route.params);
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log('DOMContentLoaded');
@@ -45,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     </div>
     <!-- SIDE BAR -->
-    <SideBar :model="assembly3DModel" :projectName="'Project_DEMO'"></SideBar>
+    <SideBar :model="assembly3DModel" :projectName="projectName"></SideBar>
     <!-- ASSEMBLY -->
     <Assembly 
       @set-assembly="updateAssembly" 

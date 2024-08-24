@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { Group } from './group.js';
 import { Panel } from './panel.js';
@@ -12,6 +13,9 @@ export class Model {
         this.renderer = renderer;
         this.model = model;
         this.orbitControls = orbitControls;
+        this.showSomeWallsAnimationState = false;
+
+        this.stopShowSomePlanelAnimationState = false;
 
         this.camera = camera;
 
@@ -32,8 +36,35 @@ export class Model {
 
         this.animationControler = new PanelController(this.groups);
 
+        this.showAll();
+
     }
 
+    initOrbitControls() {
+        this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+    }
+
+    async showSomeWallsAnimation() {
+
+        this.hideAll(0.12);
+
+        let panelsToShow = ["G-W1", "G-W8", "G-W5", "G-W3", "1F-4", "R2", "1F-W4"]
+
+        for (let i = 1; i < panelsToShow.length; i++) {
+            await new Promise(resolve => setTimeout(resolve, 1200))
+            if(this.stopShowSomePlanelAnimationState) return;
+            this.showThePanel(panelsToShow[i]);
+        }
+    }
+
+
+    stopShowSomePlanelAnimation() {
+        this.stopShowSomePlanelAnimationState = true;
+    }
+
+    allowShowSomePlanelAnimation() {
+        this.stopShowSomePlanelAnimationState = false;
+    }
 
     //TO EXPORT LEBELING CLASS
     addLabelToGroup(childrenArray, labelText) {
@@ -169,6 +200,9 @@ export class Model {
 
         // stop animation
         this.animationControler.stop();
+
+        this.showAll();
+
     }
 
 

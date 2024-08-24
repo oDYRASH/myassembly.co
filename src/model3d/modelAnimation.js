@@ -7,7 +7,7 @@ export function openingAnimation(base, camera) {
 
   console.log("animation CAMERA")
   let t1 = new Tween(camera.position)
-    .to({ y: 8, z: 0 }, 25)
+    .to({ x: 0, y: 8, z: 0 }, 25)
     .easing(Easing.Cubic.InOut)
     .start()
 
@@ -16,7 +16,7 @@ export function openingAnimation(base, camera) {
 
     setTimeout(() => {
         let t2 = new Tween(camera.position)
-            .to(base, 2200)
+            .to(base, 1500)
             .easing(Easing.Cubic.InOut)
             .start()
 
@@ -37,4 +37,43 @@ export function opacityTransition(panel, opacity, duration=300) {
         .start()
     )
   });
+}
+
+export function resetModelSpin(model) {
+  new Tween(model.rotation)
+      .to({ y: 0 }, 1000)
+      .easing(Easing.Cubic.InOut)
+      .start();
+}
+
+
+export function stepHome(model3D, camera) {
+  console.log("stepHome");
+  model3D.showAll();
+  model3D.stopBuildingAnimation();
+}
+
+export function step0(model3D, camera) {
+  model3D.playBuildingAnimation();
+  // model3D.stopShowSomePlanelAnimation();
+}
+
+export function step1(model3D) {
+
+  model3D.allowShowSomePlanelAnimation();
+  model3D.stopBuildingAnimation();
+  resetModelSpin(model3D.model);
+  model3D.showSomeWallsAnimation();  
+}
+
+export function step2(model3D, camera) {
+}
+
+export function step3(model3D, camera) {
+
+}
+
+export function step4(model3D, camera) {
+
+  
 }

@@ -190,14 +190,14 @@ onMounted(() => {
               <div class="row gy-3 overflow-hidden">
                 <div class="col-12" style="display: none;">
                   <div class="form-floating mb-3">
-                    <input type="text" disabled class="form-control" name="name" id="name" placeholder="Name" required style="background-color: #0d0d1c;">
+                    <input type="text" disabled class="form-control" name="name" id="name" placeholder="Name" required style="background-color: #0d0d1c; color: white">
                     <label for="name" class="form-label">Name</label>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" v-model="form.email" name="email" id="email" placeholder="name@example.com" required style="background-color: #0d0d1c;">
-                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" v-model="form.email" name="email" id="email" placeholder="name@example.com" required style="background-color: #0d0d1c; color: white;">
+                    <label for="email" >Email</label>
                   </div>
                 </div>
                 <div class="col-12" style="    margin-top: 0px;">

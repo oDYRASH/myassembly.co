@@ -30,7 +30,7 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/assembly-editor',
+      path: '/assembly-editor/:projectName?',
       name: 'assembly-editor',
 
       component: () => import('../views/AssemblyEditor.vue'),

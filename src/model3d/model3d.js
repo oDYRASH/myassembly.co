@@ -1,17 +1,15 @@
 import * as THREE from 'three';
 
-import Stats from 'stats-js';
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Group } from '@tweenjs/tween.js';
 
 import { Model } from '@/model3d/model.js';
 import { openingAnimation, TG } from '@/model3d/modelAnimation.js';
 import { useModelPreloadStore, demoModelPreload } from '@/stores/preLoadedModel'; // Adjust import path as needed
 
     
-let scene, camera, renderer, orbitControls, pivot, labelRenderer, cId, animationFrameId;
+let scene, camera, renderer, orbitControls, pivot, labelRenderer, cId, animationFrameId, model3D;
 
 
 function initThreeJs(containerId = null, autoSpin = false, controls = true, callback = null, modelName, preloadedModel=false) {
@@ -73,8 +71,8 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
         orbitControls.enablePan = false;
         orbitControls.minPolarAngle = Math.PI / 4;
         orbitControls.maxPolarAngle = Math.PI / 1.5;
-        // orbitControls.minDistance = 10;
-        // orbitControls.maxDistance = 20;
+        orbitControls.minDistance = 10;
+        orbitControls.maxDistance = 20;
     }else{
         console.log('No controls');
     }
@@ -195,11 +193,14 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
 
     }else{
         openingAnimation(base, camera);
+
+
+
     }
 
 
         console.log('Model loaded, initializing Model class');
-        const model3D = new Model(model, orbitControls, renderer, camera);
+        model3D = new Model(model, orbitControls, renderer, camera);
         if (callback) {
             callback(model3D);
         }
@@ -224,6 +225,7 @@ function initThreeJs(containerId = null, autoSpin = false, controls = true, call
 
     animate();
 
+    
 };
 
 
@@ -261,7 +263,7 @@ function fitCameraToModel(camera, model, controls, offset = 1.25) {
 //Three.js init
 export function build3Dmodel(containerId = null, autoSpin = false, controls = true, callback = null, modelName, preloadedModel=false) {
 
-    const sceneModel = initThreeJs(containerId, autoSpin, controls, callback, modelName, preloadedModel);
+    return initThreeJs(containerId, autoSpin, controls, callback, modelName, preloadedModel);
 
 }
 
@@ -314,6 +316,38 @@ export function cleanupModelScene() {
     if(cId){
         const sceneContainer = document.getElementById(cId);
         sceneContainer.remove()
+    }
+
+}
+
+
+
+import {stepHome, step0, step1, step2, step3, step4} from '@/model3d/modelAnimation.js';
+
+export function homePageAnimation(animationNumber) {
+
+    switch (animationNumber) {
+
+        case 0:
+            stepHome(model3D, camera);
+        case 1:
+            model3D.initOrbitControls();
+            step0(model3D, camera);
+            break;
+        case 2:
+            step1(model3D, camera);
+            break;
+        case 3:
+            step2(model3D, camera);
+            break;
+        case 4:
+            step3(model3D, camera);
+            break;
+        case 5:
+            step4(model3D, camera);
+            break;
+        default:
+            console.log('No animation number provided');
     }
 
 }

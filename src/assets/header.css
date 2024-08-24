@@ -24,6 +24,11 @@
 
 .nav-item {
     margin-right: 20px;
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important;
 }
 
 .navbar-toggler {
